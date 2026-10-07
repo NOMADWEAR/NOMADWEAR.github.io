@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -477,12 +477,11 @@
 
   <div class="tabs" id="tabs">
     <button class="tab active" data-style="all">Все</button>
-    <button class="tab" data-style="sk8">🛹 Sk8</button>
-    <button class="tab" data-style="streetwear">🔥 Streetwear</button>
-    <button class="tab" data-style="y2k">💿 Y2K</button>
-    <button class="tab" data-style="minimal">◻️ Minimal</button>
-    <button class="tab" data-style="gothic">🖤 Gothic</button>
-    <button class="tab" data-style="vintage">📼 Vintage</button>
+    <button class="tab" data-style="sk8"> Sk8</button>
+    <button class="tab" data-style="streetwear"> Streetwear</button>
+    <button class="tab" data-style="y2k"> Y2K</button>
+    <button class="tab" data-style="minimal"> Minimal</button>
+    <button class="tab" data-style="vintage"> Vintage</button>
   </div>
 </section>
 
@@ -514,7 +513,7 @@
 <footer id="about">
   <div class="logo">NOMAD<span>WEAR</span></div>
   <p>© 2025 NOMAD WEAR — Кастомная одежда с характером</p>
-  <p style="margin-top:0.5rem">Сделано с 🔥 для тех, кто не как все</p>
+  <p style="margin-top:0.5rem">Сделано с душой для тех, кто не как все</p>
 </footer>
 
 <script>
@@ -522,27 +521,24 @@
    ДАННЫЕ ТОВАРОВ
    ============================================================ */
 const products = [
-  { id: 1,  name: 'Худи "Ollie"',         style: 'sk8',        price: 4900, emoji: '🛹', tag: 'NEW' },
-  { id: 2,  name: 'Футболка "Kickflip"',  style: 'sk8',        price: 2400, emoji: '🛹' },
-  { id: 3,  name: 'Шапка "Beanie"',       style: 'sk8',        price: 1500, emoji: '🧢' },
+  { id: 1,  name: 'Худи ',         style: 'sk8',        price: 4900, emoji: '', tag: 'NEW' },
+  { id: 2,  name: 'Футболка ',  style: 'sk8',        price: 2400, emoji: '' },
+  { id: 3,  name: 'Шапка ',       style: 'sk8',        price: 1500, emoji: '' },
 
-  { id: 4,  name: 'Худи "Oversize"',      style: 'streetwear', price: 5900, emoji: '🔥', tag: 'HOT' },
-  { id: 5,  name: 'Джоггеры "Cargo"',     style: 'streetwear', price: 4200, emoji: '👖' },
-  { id: 6,  name: 'Куртка "Puffer"',      style: 'streetwear', price: 8900, emoji: '🧥' },
+  { id: 4,  name: 'Худи ',      style: 'streetwear', price: 5900, emoji: '', tag: 'HOT' },
+  { id: 5,  name: 'Джоггеры ',     style: 'streetwear', price: 4200, emoji: '' },
+  { id: 6,  name: 'Куртка ',      style: 'streetwear', price: 8900, emoji: '' },
 
-  { id: 7,  name: 'Топ "Cyber"',          style: 'y2k',        price: 2900, emoji: '💿' },
-  { id: 8,  name: 'Джинсы "Low Rise"',    style: 'y2k',        price: 5400, emoji: '✨' },
-  { id: 9,  name: 'Очки "Matrix"',        style: 'y2k',        price: 1900, emoji: '🕶️' },
+  { id: 7,  name: 'Топ ',          style: 'y2k',        price: 2900, emoji: '' },
+  { id: 8,  name: 'Джинсы ',    style: 'y2k',        price: 5400, emoji: '' },
+  { id: 9,  name: 'Очки ',        style: 'y2k',        price: 1900, emoji: '' },
 
-  { id: 10, name: 'Футболка "Blank"',     style: 'minimal',    price: 2200, emoji: '◻️' },
-  { id: 11, name: 'Свитшот "Clean"',      style: 'minimal',    price: 4600, emoji: '⬜' },
+  { id: 10, name: 'Футболка ',     style: 'minimal',    price: 2200, emoji: '' },
+  { id: 11, name: 'Свитшот ',      style: 'minimal',    price: 4600, emoji: '' },
 
-  { id: 12, name: 'Худи "Raven"',         style: 'gothic',     price: 6200, emoji: '🖤', tag: 'DROP' },
-  { id: 13, name: 'Корсет "Night"',       style: 'gothic',     price: 7400, emoji: '🦇' },
-  { id: 14, name: 'Чокер "Spike"',        style: 'gothic',     price: 1200, emoji: '⛓️' },
 
-  { id: 15, name: 'Джинсовка "90s"',      style: 'vintage',    price: 6800, emoji: '📼' },
-  { id: 16, name: 'Футболка "Retro"',     style: 'vintage',    price: 2600, emoji: '🎞️' },
+  { id: 15, name: 'Джинсовка ',      style: 'vintage',    price: 6800, emoji: '' },
+  { id: 16, name: 'Футболка ',     style: 'vintage',    price: 2600, emoji: '' },
 ];
 
 const styleNames = {
