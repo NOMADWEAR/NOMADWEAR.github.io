@@ -552,23 +552,23 @@
    ДАННЫЕ ТОВАРОВ
    ============================================================ */
 const products = [
-  { id: 1,  name: 'Худи',            style: 'sk8',        price: 4900, emoji: '🛹', tag: 'NEW' },
-  { id: 2,  name: 'Футболка',        style: 'sk8',        price: 2400, emoji: '🛹' },
-  { id: 3,  name: 'Шапка',           style: 'sk8',        price: 1500, emoji: '🧢' },
+  { id: 1,  name: 'Худи',            style: 'sk8',        price: 4900, emoji: '', tag: 'NEW' },
+  { id: 2,  name: 'Футболка',        style: 'sk8',        price: 2400, emoji: '' },
+  { id: 3,  name: 'Шапка',           style: 'sk8',        price: 1500, emoji: '' },
 
-  { id: 4,  name: 'Худи',            style: 'streetwear', price: 5900, emoji: '🔥', tag: 'HOT' },
-  { id: 5,  name: 'Джоггеры',        style: 'streetwear', price: 4200, emoji: '👖' },
-  { id: 6,  name: 'Куртка',          style: 'streetwear', price: 8900, emoji: '🧥' },
+  { id: 4,  name: 'Худи',            style: 'streetwear', price: 5900, emoji: '', tag: 'HOT' },
+  { id: 5,  name: 'Джоггеры',        style: 'streetwear', price: 4200, emoji: '' },
+  { id: 6,  name: 'Куртка',          style: 'streetwear', price: 8900, emoji: '' },
 
-  { id: 7,  name: 'Топ',             style: 'y2k',        price: 2900, emoji: '💿' },
-  { id: 8,  name: 'Джинсы',          style: 'y2k',        price: 5400, emoji: '✨' },
-  { id: 9,  name: 'Очки',            style: 'y2k',        price: 1900, emoji: '🕶️' },
+  { id: 7,  name: 'Топ',             style: 'y2k',        price: 2900, emoji: '' },
+  { id: 8,  name: 'Джинсы',          style: 'y2k',        price: 5400, emoji: '' },
+  { id: 9,  name: 'Очки',            style: 'y2k',        price: 1900, emoji: '' },
 
-  { id: 10, name: 'Футболка',        style: 'minimal',    price: 2200, emoji: '◻️' },
-  { id: 11, name: 'Свитшот',         style: 'minimal',    price: 4600, emoji: '⬜' },
+  { id: 10, name: 'Футболка',        style: 'minimal',    price: 2200, emoji: '' },
+  { id: 11, name: 'Свитшот',         style: 'minimal',    price: 4600, emoji: '' },
 
-  { id: 15, name: 'Джинсовка',       style: 'vintage',    price: 6800, emoji: '📼' },
-  { id: 16, name: 'Футболка',        style: 'vintage',    price: 2600, emoji: '🎞️' },
+  { id: 15, name: 'Джинсовка',       style: 'vintage',    price: 6800, emoji: '' },
+  { id: 16, name: 'Футболка',        style: 'vintage',    price: 2600, emoji: '' },
 ];
 
 const styleNames = {
