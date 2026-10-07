@@ -512,7 +512,7 @@
 <!-- ============ FOOTER ============ -->
 <footer id="about">
   <div class="logo">NOMAD<span>WEAR</span></div>
-  <p>© 2025 NOMAD WEAR — Кастомная одежда с характером</p>
+  <p>© 2026 NOMAD WEAR — Кастомная одежда с характером</p>
   <p style="margin-top:0.5rem">Сделано с душой для тех, кто не как все</p>
 </footer>
 
