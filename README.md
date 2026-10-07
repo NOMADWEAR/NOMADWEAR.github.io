@@ -1,4 +1,3 @@
-
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
@@ -59,6 +58,7 @@
     font-size: 1.4rem;
     font-weight: 900;
     letter-spacing: -0.02em;
+    cursor: pointer;
   }
   .logo span { color: var(--accent); }
 
@@ -71,6 +71,7 @@
     font-size: 0.9rem;
     color: var(--muted);
     transition: color 0.2s;
+    cursor: pointer;
   }
   .nav-links a:hover { color: var(--accent); }
 
@@ -134,6 +135,8 @@
     border-radius: 999px;
     font-weight: 800;
     font-size: 1rem;
+    cursor: pointer;
+    border: none;
     transition: transform 0.2s, box-shadow 0.2s;
   }
   .hero-cta:hover {
@@ -286,6 +289,27 @@
   }
   .add-btn:active { transform: scale(0.95); }
 
+  /* ---------- BACK BUTTON ---------- */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    transition: all 0.2s;
+  }
+  .back-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
   /* ---------- CART MODAL ---------- */
   .modal-overlay {
     position: fixed;
@@ -429,6 +453,10 @@
   }
   footer .logo { margin-bottom: 1rem; }
 
+  /* ---------- СКРЫТИЕ / ПОКАЗ СТРАНИЦ ---------- */
+  .page { display: none; }
+  .page.active { display: block; }
+
   /* ---------- MOBILE ---------- */
   @media (max-width: 768px) {
     .nav-links { display: none; }
@@ -451,10 +479,10 @@
 <!-- ============ HEADER ============ -->
 <header>
   <nav class="nav">
-    <div class="logo">NOMAD<span>WEAR</span></div>
+    <div class="logo" onclick="showHome()">NOMAD<span>WEAR</span></div>
     <ul class="nav-links">
-      <li><a href="#catalog">Каталог</a></li>
-      <li><a href="#styles">Стили</a></li>
+      <li><a onclick="showCatalog()">Каталог</a></li>
+      <li><a onclick="showCatalog()">Стили</a></li>
       <li><a href="#about">О нас</a></li>
     </ul>
     <button class="cart-btn" onclick="openCart()">
@@ -463,32 +491,35 @@
   </nav>
 </header>
 
-<!-- ============ HERO ============ -->
-<section class="hero">
-  <h1>Одежда, которая<br>говорит <span class="accent">за тебя</span></h1>
-  <p>Кастомный принт, ограниченные дропы и стили от sk8 до gothic. Создай вещь, которой больше ни у кого не будет.</p>
-  <a href="#catalog" class="hero-cta">Смотреть каталог →</a>
-</section>
+<!-- ============ ГЛАВНАЯ СТРАНИЦА ============ -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <h1>Одежда, которая<br>говорит <span class="accent">за тебя</span></h1>
+    <p>Кастомный принт, ограниченные дропы и стили от sk8 до gothic. Создай вещь, которой больше ни у кого не будет.</p>
+    <button class="hero-cta" onclick="showCatalog()">Смотреть каталог →</button>
+  </section>
+</div>
 
-<!-- ============ STYLES / TABS ============ -->
-<section class="styles-section" id="styles">
-  <h2 class="section-title">Выбери свой стиль</h2>
-  <p class="section-sub">Каждая вещь — под конкретную субкультуру и настроение</p>
+<!-- ============ СТРАНИЦА КАТАЛОГА ============ -->
+<div id="page-catalog" class="page">
+  <section class="styles-section">
+    <button class="back-btn" onclick="showHome()">← Назад на главную</button>
 
-  <div class="tabs" id="tabs">
-    <button class="tab active" data-style="all">Все</button>
-    <button class="tab" data-style="sk8"> Sk8</button>
-    <button class="tab" data-style="streetwear"> Streetwear</button>
-    <button class="tab" data-style="y2k"> Y2K</button>
-    <button class="tab" data-style="minimal"> Minimal</button>
-    <button class="tab" data-style="vintage"> Vintage</button>
-  </div>
-</section>
+    <h2 class="section-title">Выбери свой стиль</h2>
+    <p class="section-sub">Каждая вещь — под конкретную субкультуру и настроение</p>
 
-<!-- ============ CATALOG ============ -->
-<section class="styles-section" id="catalog">
-  <div class="products" id="products"></div>
-</section>
+    <div class="tabs" id="tabs">
+      <button class="tab active" data-style="all">Все</button>
+      <button class="tab" data-style="sk8">Sk8</button>
+      <button class="tab" data-style="streetwear">Streetwear</button>
+      <button class="tab" data-style="y2k">Y2K</button>
+      <button class="tab" data-style="minimal">Minimal</button>
+      <button class="tab" data-style="vintage">Vintage</button>
+    </div>
+
+    <div class="products" id="products"></div>
+  </section>
+</div>
 
 <!-- ============ CART MODAL ============ -->
 <div class="modal-overlay" id="cartOverlay" onclick="closeCartOutside(event)">
@@ -521,24 +552,23 @@
    ДАННЫЕ ТОВАРОВ
    ============================================================ */
 const products = [
-  { id: 1,  name: 'Худи ',         style: 'sk8',        price: 4900, emoji: '', tag: 'NEW' },
-  { id: 2,  name: 'Футболка ',  style: 'sk8',        price: 2400, emoji: '' },
-  { id: 3,  name: 'Шапка ',       style: 'sk8',        price: 1500, emoji: '' },
+  { id: 1,  name: 'Худи',            style: 'sk8',        price: 4900, emoji: '🛹', tag: 'NEW' },
+  { id: 2,  name: 'Футболка',        style: 'sk8',        price: 2400, emoji: '🛹' },
+  { id: 3,  name: 'Шапка',           style: 'sk8',        price: 1500, emoji: '🧢' },
 
-  { id: 4,  name: 'Худи ',      style: 'streetwear', price: 5900, emoji: '', tag: 'HOT' },
-  { id: 5,  name: 'Джоггеры ',     style: 'streetwear', price: 4200, emoji: '' },
-  { id: 6,  name: 'Куртка ',      style: 'streetwear', price: 8900, emoji: '' },
+  { id: 4,  name: 'Худи',            style: 'streetwear', price: 5900, emoji: '🔥', tag: 'HOT' },
+  { id: 5,  name: 'Джоггеры',        style: 'streetwear', price: 4200, emoji: '👖' },
+  { id: 6,  name: 'Куртка',          style: 'streetwear', price: 8900, emoji: '🧥' },
 
-  { id: 7,  name: 'Топ ',          style: 'y2k',        price: 2900, emoji: '' },
-  { id: 8,  name: 'Джинсы ',    style: 'y2k',        price: 5400, emoji: '' },
-  { id: 9,  name: 'Очки ',        style: 'y2k',        price: 1900, emoji: '' },
+  { id: 7,  name: 'Топ',             style: 'y2k',        price: 2900, emoji: '💿' },
+  { id: 8,  name: 'Джинсы',          style: 'y2k',        price: 5400, emoji: '✨' },
+  { id: 9,  name: 'Очки',            style: 'y2k',        price: 1900, emoji: '🕶️' },
 
-  { id: 10, name: 'Футболка ',     style: 'minimal',    price: 2200, emoji: '' },
-  { id: 11, name: 'Свитшот ',      style: 'minimal',    price: 4600, emoji: '' },
+  { id: 10, name: 'Футболка',        style: 'minimal',    price: 2200, emoji: '◻️' },
+  { id: 11, name: 'Свитшот',         style: 'minimal',    price: 4600, emoji: '⬜' },
 
-
-  { id: 15, name: 'Джинсовка ',      style: 'vintage',    price: 6800, emoji: '' },
-  { id: 16, name: 'Футболка ',     style: 'vintage',    price: 2600, emoji: '' },
+  { id: 15, name: 'Джинсовка',       style: 'vintage',    price: 6800, emoji: '📼' },
+  { id: 16, name: 'Футболка',        style: 'vintage',    price: 2600, emoji: '🎞️' },
 ];
 
 const styleNames = {
@@ -556,6 +586,22 @@ const styleNames = {
    ============================================================ */
 let currentStyle = 'all';
 let cart = JSON.parse(localStorage.getItem('nomadwear_cart') || '[]');
+
+/* ============================================================
+   НАВИГАЦИЯ МЕЖДУ СТРАНИЦАМИ
+   ============================================================ */
+function showHome() {
+  document.getElementById('page-home').classList.add('active');
+  document.getElementById('page-catalog').classList.remove('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showCatalog() {
+  document.getElementById('page-home').classList.remove('active');
+  document.getElementById('page-catalog').classList.add('active');
+  renderProducts();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 /* ============================================================
    РЕНДЕР КАТАЛОГА
