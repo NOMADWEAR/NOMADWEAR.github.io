@@ -16,7 +16,11 @@
     --bg: #0d0d0f;
     --bg-2: #16161a;
     --card: #1c1c22;
-    --accent: #d4ff3f;
+    /* ХРОМОВЫЙ АКЦЕНТ */
+    --accent: #c8d0d8;
+    --accent-light: #eef2f5;
+    --accent-dark: #8a97a3;
+    --accent-grad: linear-gradient(135deg, #f2f6f9 0%, #b9c4cf 20%, #e6edf2 40%, #98a5b2 60%, #d8e0e7 80%, #aab6c2 100%);
     --accent-2: #ff4d6d;
     --text: #f5f5f7;
     --muted: #8a8a94;
@@ -29,6 +33,12 @@
     color: var(--text);
     line-height: 1.6;
     overflow-x: hidden;
+    /* ЛЁГКАЯ МЕТАЛЛИЧЕСКАЯ ТЕКСТУРА ФОНА */
+    background-image:
+      radial-gradient(ellipse at 20% 0%, rgba(200, 208, 216, 0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 100%, rgba(200, 208, 216, 0.05) 0%, transparent 50%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 6px);
+    background-attachment: fixed;
   }
 
   a { color: inherit; text-decoration: none; }
@@ -42,6 +52,7 @@
     background: rgba(13, 13, 15, 0.85);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 0 rgba(200, 208, 216, 0.08), 0 4px 20px rgba(0,0,0,0.5);
   }
 
   .nav {
@@ -60,7 +71,13 @@
     letter-spacing: -0.02em;
     cursor: pointer;
   }
-  .logo span { color: var(--accent); }
+  .logo span {
+    background: var(--accent-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
 
   .nav-links {
     display: flex;
@@ -73,12 +90,12 @@
     transition: color 0.2s;
     cursor: pointer;
   }
-  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover { color: var(--accent-light); }
 
   .cart-btn {
-    background: var(--accent);
-    color: #000;
-    border: none;
+    background: var(--accent-grad);
+    color: #0d0d0f;
+    border: 1px solid #e6edf2;
     padding: 0.6rem 1.2rem;
     border-radius: 999px;
     font-weight: 700;
@@ -87,13 +104,17 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 2px 8px rgba(0,0,0,0.4);
   }
-  .cart-btn:hover { transform: scale(1.05); }
+  .cart-btn:hover {
+    transform: scale(1.05);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 4px 16px rgba(200,208,216,0.25);
+  }
 
   .cart-count {
-    background: #000;
-    color: var(--accent);
+    background: #0d0d0f;
+    color: var(--accent-light);
     border-radius: 999px;
     padding: 0 0.5rem;
     font-size: 0.75rem;
@@ -117,8 +138,14 @@
     margin-bottom: 1.5rem;
   }
   .hero h1 .accent {
-    color: var(--accent);
+    background: var(--accent-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
     font-style: italic;
+    /* лёгкий металлический блик */
+    filter: drop-shadow(0 0 12px rgba(200, 208, 216, 0.35));
   }
   .hero p {
     color: var(--muted);
@@ -129,19 +156,20 @@
 
   .hero-cta {
     display: inline-block;
-    background: var(--accent);
-    color: #000;
+    background: var(--accent-grad);
+    color: #0d0d0f;
     padding: 1rem 2.5rem;
     border-radius: 999px;
     font-weight: 800;
     font-size: 1rem;
     cursor: pointer;
-    border: none;
+    border: 1px solid #e6edf2;
     transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 4px 14px rgba(0,0,0,0.4);
   }
   .hero-cta:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(212, 255, 63, 0.3);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 10px 30px rgba(200, 208, 216, 0.28);
   }
 
   /* ---------- TABS (СТИЛИ) ---------- */
@@ -189,9 +217,10 @@
     border-color: var(--muted);
   }
   .tab.active {
-    background: var(--accent);
-    color: #000;
-    border-color: var(--accent);
+    background: var(--accent-grad);
+    color: #0d0d0f;
+    border-color: #e6edf2;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 2px 10px rgba(200,208,216,0.2);
   }
 
   /* ---------- КАТАЛОГ ---------- */
@@ -202,22 +231,37 @@
   }
 
   .product-card {
-    background: var(--card);
+    background: linear-gradient(160deg, #1f1f26 0%, #191920 50%, #1d1d24 100%);
     border: 1px solid var(--border);
     border-radius: 16px;
     overflow: hidden;
-    transition: transform 0.3s, border-color 0.3s;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
     display: flex;
     flex-direction: column;
+    position: relative;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 2px 12px rgba(0,0,0,0.4);
+  }
+  .product-card::before {
+    /* металлический блик по верхней кромке */
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(230,237,242,0.5), transparent);
+    pointer-events: none;
   }
   .product-card:hover {
     transform: translateY(-6px);
     border-color: var(--accent);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 12px 32px rgba(200,208,216,0.15);
   }
 
   .product-img {
     aspect-ratio: 1 / 1;
-    background: linear-gradient(135deg, #23232b, #2f2f3a);
+    background:
+      linear-gradient(135deg, #23232b, #2f2f3a),
+      repeating-linear-gradient(60deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 8px);
+    background-blend-mode: overlay;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -235,6 +279,7 @@
     padding: 0.25rem 0.7rem;
     border-radius: 999px;
     text-transform: uppercase;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
   }
 
   .product-info {
@@ -246,11 +291,15 @@
 
   .product-style {
     font-size: 0.7rem;
-    color: var(--accent);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-weight: 700;
     margin-bottom: 0.4rem;
+    background: var(--accent-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
   }
 
   .product-name {
@@ -275,17 +324,20 @@
   .add-btn {
     background: transparent;
     border: 1px solid var(--accent);
-    color: var(--accent);
+    color: var(--accent-light);
     padding: 0.5rem 1rem;
     border-radius: 999px;
     font-weight: 700;
     font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.2s;
+    box-shadow: inset 0 0 0 rgba(255,255,255,0);
   }
   .add-btn:hover {
-    background: var(--accent);
-    color: #000;
+    background: var(--accent-grad);
+    color: #0d0d0f;
+    border-color: #e6edf2;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 2px 10px rgba(200,208,216,0.25);
   }
   .add-btn:active { transform: scale(0.95); }
 
@@ -306,7 +358,7 @@
     transition: all 0.2s;
   }
   .back-btn:hover {
-    color: var(--accent);
+    color: var(--accent-light);
     border-color: var(--accent);
   }
 
@@ -325,7 +377,7 @@
   .modal-overlay.open { display: flex; }
 
   .cart-modal {
-    background: var(--bg-2);
+    background: linear-gradient(160deg, #1a1a20 0%, #14141a 100%);
     border: 1px solid var(--border);
     border-radius: 20px;
     width: 100%;
@@ -333,6 +385,7 @@
     max-height: 85vh;
     overflow-y: auto;
     padding: 1.5rem;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 20px 60px rgba(0,0,0,0.7);
   }
 
   .cart-header {
@@ -364,12 +417,13 @@
     width: 50px;
     height: 50px;
     border-radius: 10px;
-    background: var(--card);
+    background: linear-gradient(135deg, #26262e, #32323c);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
     flex-shrink: 0;
+    border: 1px solid var(--border);
   }
   .cart-item-info { flex: 1; }
   .cart-item-name { font-size: 0.9rem; font-weight: 600; }
@@ -405,21 +459,26 @@
   .checkout-btn {
     width: 100%;
     margin-top: 1rem;
-    background: var(--accent);
-    color: #000;
-    border: none;
+    background: var(--accent-grad);
+    color: #0d0d0f;
+    border: 1px solid #e6edf2;
     padding: 1rem;
     border-radius: 999px;
     font-weight: 800;
     font-size: 1rem;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 4px 14px rgba(0,0,0,0.4);
   }
-  .checkout-btn:hover { transform: scale(1.02); }
+  .checkout-btn:hover {
+    transform: scale(1.02);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 24px rgba(200,208,216,0.25);
+  }
   .checkout-btn:disabled {
     opacity: 0.4;
     cursor: not-allowed;
     transform: none;
+    box-shadow: none;
   }
 
   /* ---------- TOAST ---------- */
@@ -428,14 +487,16 @@
     bottom: 2rem;
     left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: var(--accent);
-    color: #000;
+    background: var(--accent-grad);
+    color: #0d0d0f;
     padding: 0.8rem 1.5rem;
     border-radius: 999px;
     font-weight: 700;
     z-index: 300;
     opacity: 0;
     transition: all 0.3s;
+    border: 1px solid #e6edf2;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 8px 24px rgba(0,0,0,0.5);
   }
   .toast.show {
     transform: translateX(-50%) translateY(0);
@@ -450,8 +511,61 @@
     text-align: center;
     color: var(--muted);
     font-size: 0.9rem;
+    background-image:
+      radial-gradient(ellipse at 50% 0%, rgba(200,208,216,0.04) 0%, transparent 60%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 8px);
   }
   footer .logo { margin-bottom: 1rem; }
+
+  /* ---------- БЛОК РЕКВИЗИТОВ ---------- */
+  .requisites {
+    max-width: 900px;
+    margin: 0 auto 2rem;
+    text-align: left;
+    background: linear-gradient(160deg, #1a1a20 0%, #14141a 100%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem 1.8rem;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 20px rgba(0,0,0,0.4);
+  }
+  .requisites h3 {
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1rem;
+    background: var(--accent-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .requisites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.7rem 1.5rem;
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  .requisites-grid .req-label {
+    color: var(--muted);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: block;
+    margin-bottom: 0.1rem;
+  }
+  .requisites-grid .req-value {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .req-note {
+    margin-top: 1rem;
+    padding-top: 0.8rem;
+    border-top: 1px dashed var(--border);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
 
   /* ---------- СКРЫТИЕ / ПОКАЗ СТРАНИЦ ---------- */
   .page { display: none; }
@@ -468,6 +582,8 @@
     .product-name { font-size: 0.9rem; }
     .price { font-size: 1rem; }
     .add-btn { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
+    .requisites { padding: 1.2rem; }
+    .requisites-grid { grid-template-columns: 1fr; gap: 0.6rem; }
   }
 </style>
 </head>
@@ -545,6 +661,49 @@
   <div class="logo">NOMAD<span>WEAR</span></div>
   <p>© 2026 NOMAD WEAR — Кастомная одежда с характером</p>
   <p style="margin-top:0.5rem">Сделано с душой для тех, кто не как все</p>
+
+  <!-- ===== РЕКВИЗИТЫ МАГАЗИНА ===== -->
+  <div class="requisites">
+    <h3>Реквизиты магазина</h3>
+    <div class="requisites-grid">
+      <div>
+        <span class="req-label">Полное наименование</span>
+        <span class="req-value">ИП Иванов Иван Иванович</span>
+      </div>
+      <div>
+        <span class="req-label">ИНН</span>
+        <span class="req-value">000000000000</span>
+      </div>
+      <div>
+        <span class="req-label">ОГРНИП</span>
+        <span class="req-value">300000000000000</span>
+      </div>
+      <div>
+        <span class="req-label">Юридический адрес</span>
+        <span class="req-value">г. Москва, ул. Примерная, д. 1, офис 1</span>
+      </div>
+      <div>
+        <span class="req-label">Телефон</span>
+        <span class="req-value">+7 (900) 000-00-00</span>
+      </div>
+      <div>
+        <span class="req-label">Email</span>
+        <span class="req-value">info@nomadwear.ru</span>
+      </div>
+      <div>
+        <span class="req-label">Часы работы</span>
+        <span class="req-value">Пн–Пт: 10:00–19:00</span>
+      </div>
+      <div>
+        <span class="req-label">Сайт</span>
+        <span class="req-value">nomadwear.ru</span>
+      </div>
+    </div>
+    <div class="req-note">
+      * Заполните блок своими реальными данными. Для интернет-магазина в РФ обычно указываются:
+      ИНН, ОГРН/ОГРНИП, юридический адрес, контактный телефон и email.
+    </div>
+  </div>
 </footer>
 
 <script>
@@ -552,23 +711,23 @@
    ДАННЫЕ ТОВАРОВ
    ============================================================ */
 const products = [
-  { id: 1,  name: 'Худи',            style: 'sk8',        price: 4900, emoji: '', tag: 'NEW' },
-  { id: 2,  name: 'Футболка',        style: 'sk8',        price: 2400, emoji: '' },
-  { id: 3,  name: 'Шапка',           style: 'sk8',        price: 1500, emoji: '' },
+  { id: 1,  name: 'Худи',            style: 'sk8',        price: 4900, emoji: '🧥', tag: 'NEW' },
+  { id: 2,  name: 'Футболка',        style: 'sk8',        price: 2400, emoji: '👕' },
+  { id: 3,  name: 'Шапка',           style: 'sk8',        price: 1500, emoji: '🧢' },
 
-  { id: 4,  name: 'Худи',            style: 'streetwear', price: 5900, emoji: '', tag: 'HOT' },
-  { id: 5,  name: 'Джоггеры',        style: 'streetwear', price: 4200, emoji: '' },
-  { id: 6,  name: 'Куртка',          style: 'streetwear', price: 8900, emoji: '' },
+  { id: 4,  name: 'Худи',            style: 'streetwear', price: 5900, emoji: '🧥', tag: 'HOT' },
+  { id: 5,  name: 'Джоггеры',        style: 'streetwear', price: 4200, emoji: '👖' },
+  { id: 6,  name: 'Куртка',          style: 'streetwear', price: 8900, emoji: '🧥' },
 
-  { id: 7,  name: 'Топ',             style: 'y2k',        price: 2900, emoji: '' },
-  { id: 8,  name: 'Джинсы',          style: 'y2k',        price: 5400, emoji: '' },
-  { id: 9,  name: 'Очки',            style: 'y2k',        price: 1900, emoji: '' },
+  { id: 7,  name: 'Топ',             style: 'y2k',        price: 2900, emoji: '👚' },
+  { id: 8,  name: 'Джинсы',          style: 'y2k',        price: 5400, emoji: '👖' },
+  { id: 9,  name: 'Очки',            style: 'y2k',        price: 1900, emoji: '🕶️' },
 
-  { id: 10, name: 'Футболка',        style: 'minimal',    price: 2200, emoji: '' },
-  { id: 11, name: 'Свитшот',         style: 'minimal',    price: 4600, emoji: '' },
+  { id: 10, name: 'Футболка',        style: 'minimal',    price: 2200, emoji: '👕' },
+  { id: 11, name: 'Свитшот',         style: 'minimal',    price: 4600, emoji: '👔' },
 
-  { id: 15, name: 'Джинсовка',       style: 'vintage',    price: 6800, emoji: '' },
-  { id: 16, name: 'Футболка',        style: 'vintage',    price: 2600, emoji: '' },
+  { id: 15, name: 'Джинсовка',       style: 'vintage',    price: 6800, emoji: '🧥' },
+  { id: 16, name: 'Футболка',        style: 'vintage',    price: 2600, emoji: '👕' },
 ];
 
 const styleNames = {
