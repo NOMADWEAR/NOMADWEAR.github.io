@@ -40,7 +40,7 @@
     content: '';
     position: fixed;
     inset: 0;
-    background-image: url('https://yapx.ru/v/XXXXXXX.jpg');
+    background-image: url('MG_2661.JPG');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
