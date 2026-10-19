@@ -16,7 +16,6 @@
     --bg: #0d0d0f;
     --bg-2: #16161a;
     --card: #1c1c22;
-    /* ХРОМОВЫЙ АКЦЕНТ */
     --accent: #c8d0d8;
     --accent-light: #eef2f5;
     --accent-dark: #8a97a3;
@@ -33,7 +32,6 @@
     color: var(--text);
     line-height: 1.6;
     overflow-x: hidden;
-    /* ЛЁГКАЯ МЕТАЛЛИЧЕСКАЯ ТЕКСТУРА ФОНА */
     background-image:
       radial-gradient(ellipse at 20% 0%, rgba(200, 208, 216, 0.06) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 100%, rgba(200, 208, 216, 0.05) 0%, transparent 50%),
@@ -81,10 +79,15 @@
 
   .nav-links {
     display: flex;
+    align-items: center;
     gap: 2rem;
     list-style: none;
   }
+  .nav-links li { display: flex; align-items: center; }
   .nav-links a {
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
     font-size: 0.9rem;
     color: var(--muted);
     transition: color 0.2s;
@@ -263,7 +266,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 4rem;
     position: relative;
   }
   .product-tag {
@@ -416,10 +418,6 @@
     height: 50px;
     border-radius: 10px;
     background: linear-gradient(135deg, #26262e, #32323c);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
     flex-shrink: 0;
     border: 1px solid var(--border);
   }
@@ -629,7 +627,7 @@
       <li><a href="#about">О нас</a></li>
     </ul>
     <button class="cart-btn" onclick="openCart()">
-      🛒 Корзина <span class="cart-count" id="cartCount">0</span>
+      Корзина <span class="cart-count" id="cartCount">0</span>
     </button>
   </nav>
 </header>
@@ -656,7 +654,6 @@
       <button class="tab" data-style="sk8">Sk8</button>
       <button class="tab" data-style="streetwear">Streetwear</button>
       <button class="tab" data-style="y2k">Y2K</button>
-      <button class="tab" data-style="minimal">Minimal</button>
       <button class="tab" data-style="vintage">Vintage</button>
     </div>
 
@@ -732,23 +729,20 @@
    ДАННЫЕ ТОВАРОВ
    ============================================================ */
 const products = [
-  { id: 1,  name: 'Худи',            style: 'sk8',        price: 4900, emoji: '🧥', tag: 'NEW' },
-  { id: 2,  name: 'Футболка',        style: 'sk8',        price: 2400, emoji: '👕' },
-  { id: 3,  name: 'Шапка',           style: 'sk8',        price: 1500, emoji: '🧢' },
+  { id: 1,  name: 'Худи',            style: 'sk8',        price: 4900, tag: 'NEW' },
+  { id: 2,  name: 'Футболка',        style: 'sk8',        price: 2400 },
+  { id: 3,  name: 'Шапка',           style: 'sk8',        price: 1500 },
 
-  { id: 4,  name: 'Худи',            style: 'streetwear', price: 5900, emoji: '🧥', tag: 'HOT' },
-  { id: 5,  name: 'Джоггеры',        style: 'streetwear', price: 4200, emoji: '👖' },
-  { id: 6,  name: 'Куртка',          style: 'streetwear', price: 8900, emoji: '🧥' },
+  { id: 4,  name: 'Худи',            style: 'streetwear', price: 5900, tag: 'HOT' },
+  { id: 5,  name: 'Джоггеры',        style: 'streetwear', price: 4200 },
+  { id: 6,  name: 'Куртка',          style: 'streetwear', price: 8900 },
 
-  { id: 7,  name: 'Топ',             style: 'y2k',        price: 2900, emoji: '👚' },
-  { id: 8,  name: 'Джинсы',          style: 'y2k',        price: 5400, emoji: '👖' },
-  { id: 9,  name: 'Очки',            style: 'y2k',        price: 1900, emoji: '🕶️' },
+  { id: 7,  name: 'Топ',             style: 'y2k',        price: 2900 },
+  { id: 8,  name: 'Джинсы',          style: 'y2k',        price: 5400 },
+  { id: 9,  name: 'Очки',            style: 'y2k',        price: 1900 },
 
-  { id: 10, name: 'Футболка',        style: 'minimal',    price: 2200, emoji: '👕' },
-  { id: 11, name: 'Свитшот',         style: 'minimal',    price: 4600, emoji: '👔' },
-
-  { id: 15, name: 'Джинсовка',       style: 'vintage',    price: 6800, emoji: '🧥' },
-  { id: 16, name: 'Футболка',        style: 'vintage',    price: 2600, emoji: '👕' },
+  { id: 15, name: 'Джинсовка',       style: 'vintage',    price: 6800 },
+  { id: 16, name: 'Футболка',        style: 'vintage',    price: 2600 },
 ];
 
 const styleNames = {
@@ -756,8 +750,6 @@ const styleNames = {
   sk8: 'Sk8',
   streetwear: 'Streetwear',
   y2k: 'Y2K',
-  minimal: 'Minimal',
-  gothic: 'Gothic',
   vintage: 'Vintage',
 };
 
@@ -815,7 +807,6 @@ function renderProducts() {
     <div class="product-card">
       <div class="product-img">
         ${p.tag ? `<span class="product-tag">${p.tag}</span>` : ''}
-        ${p.emoji}
       </div>
       <div class="product-info">
         <div class="product-style">${styleNames[p.style]}</div>
@@ -879,7 +870,7 @@ function updateCartUI() {
   const checkoutBtn = document.getElementById('checkoutBtn');
 
   if (cart.length === 0) {
-    itemsContainer.innerHTML = '<div class="cart-empty">Корзина пуста 🛒</div>';
+    itemsContainer.innerHTML = '<div class="cart-empty">Корзина пуста</div>';
     totalEl.textContent = '0 ₽';
     checkoutBtn.disabled = true;
     return;
@@ -887,7 +878,7 @@ function updateCartUI() {
 
   itemsContainer.innerHTML = cart.map(item => `
     <div class="cart-item">
-      <div class="cart-item-img">${item.emoji}</div>
+      <div class="cart-item-img"></div>
       <div class="cart-item-info">
         <div class="cart-item-name">${item.name} × ${item.qty}</div>
         <div class="cart-item-price">${(item.price * item.qty).toLocaleString('ru-RU')} ₽</div>
@@ -961,7 +952,7 @@ function closePayOutside(e) {
 
 function confirmPayment() {
   if (cart.length === 0) return;
-  alert('✅ Спасибо! Мы получили заявку.\n\nПроверьте перевод и свяжитесь с нами для подтверждения.');
+  alert('Спасибо! Мы получили заявку.\n\nПроверьте перевод и свяжитесь с нами для подтверждения.');
   cart = [];
   saveCart();
   updateCartUI();
