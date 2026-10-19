@@ -144,7 +144,6 @@
     -webkit-text-fill-color: transparent;
     color: transparent;
     font-style: italic;
-    /* лёгкий металлический блик */
     filter: drop-shadow(0 0 12px rgba(200, 208, 216, 0.35));
   }
   .hero p {
@@ -242,7 +241,6 @@
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 2px 12px rgba(0,0,0,0.4);
   }
   .product-card::before {
-    /* металлический блик по верхней кромке */
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
@@ -481,6 +479,73 @@
     box-shadow: none;
   }
 
+  /* ---------- CHECKOUT MODAL ---------- */
+  .pay-modal {
+    background: linear-gradient(160deg, #1a1a20 0%, #14141a 100%);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 460px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 1.5rem;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 20px 60px rgba(0,0,0,0.7);
+  }
+  .pay-modal h2 { font-size: 1.3rem; margin-bottom: 0.4rem; }
+  .pay-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.2rem; }
+
+  .pay-method {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 0.6rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background: rgba(255,255,255,0.02);
+  }
+  .pay-method:hover { border-color: var(--accent); }
+  .pay-method.selected {
+    border-color: var(--accent);
+    background: rgba(200,208,216,0.06);
+  }
+  .pay-method input { accent-color: #c8d0d8; }
+  .pay-method-label { font-weight: 600; font-size: 0.9rem; }
+  .pay-method-desc { color: var(--muted); font-size: 0.75rem; }
+
+  .pay-details {
+    margin-top: 0.8rem;
+    padding: 0.9rem 1rem;
+    border-radius: 12px;
+    background: rgba(0,0,0,0.3);
+    border: 1px dashed var(--border);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    display: none;
+  }
+  .pay-details.show { display: block; }
+  .pay-details .pay-row { display: flex; justify-content: space-between; gap: 1rem; }
+  .pay-details .pay-row span:first-child { color: var(--muted); }
+  .pay-details .pay-row span:last-child { font-weight: 700; word-break: break-all; }
+
+  .pay-actions { display: flex; gap: 0.6rem; margin-top: 1.2rem; }
+  .pay-actions .checkout-btn { margin-top: 0; }
+  .pay-cancel {
+    flex: 0 0 auto;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 1rem 1.4rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .pay-cancel:hover { color: var(--text); border-color: var(--muted); }
+
   /* ---------- TOAST ---------- */
   .toast {
     position: fixed;
@@ -517,55 +582,17 @@
   }
   footer .logo { margin-bottom: 1rem; }
 
-  /* ---------- БЛОК РЕКВИЗИТОВ ---------- */
-  .requisites {
-    max-width: 900px;
-    margin: 0 auto 2rem;
-    text-align: left;
-    background: linear-gradient(160deg, #1a1a20 0%, #14141a 100%);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.5rem 1.8rem;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 4px 20px rgba(0,0,0,0.4);
+  .footer-contacts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 1.2rem;
+    font-size: 0.9rem;
+    flex-wrap: wrap;
   }
-  .requisites h3 {
-    font-size: 1rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 1rem;
-    background: var(--accent-grad);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: transparent;
-  }
-  .requisites-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0.7rem 1.5rem;
-    font-size: 0.85rem;
-    line-height: 1.5;
-  }
-  .requisites-grid .req-label {
-    color: var(--muted);
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    display: block;
-    margin-bottom: 0.1rem;
-  }
-  .requisites-grid .req-value {
-    color: var(--text);
-    font-weight: 600;
-  }
-  .req-note {
-    margin-top: 1rem;
-    padding-top: 0.8rem;
-    border-top: 1px dashed var(--border);
-    font-size: 0.75rem;
-    color: var(--muted);
-  }
+  .footer-contacts a { color: var(--accent-light); font-weight: 600; }
+  .footer-contacts a:hover { text-decoration: underline; }
 
   /* ---------- СКРЫТИЕ / ПОКАЗ СТРАНИЦ ---------- */
   .page { display: none; }
@@ -582,8 +609,8 @@
     .product-name { font-size: 0.9rem; }
     .price { font-size: 1rem; }
     .add-btn { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
-    .requisites { padding: 1.2rem; }
-    .requisites-grid { grid-template-columns: 1fr; gap: 0.6rem; }
+    .pay-actions { flex-direction: column; }
+    .pay-cancel { width: 100%; }
   }
 </style>
 </head>
@@ -653,6 +680,37 @@
   </div>
 </div>
 
+<!-- ============ CHECKOUT MODAL ============ -->
+<div class="modal-overlay" id="payOverlay" onclick="closePayOutside(event)">
+  <div class="pay-modal" onclick="event.stopPropagation()">
+    <h2>Оплата заказа</h2>
+    <p class="pay-sub">Выберите способ оплаты. Реквизиты получателя появятся после выбора.</p>
+
+    <label class="pay-method selected" data-method="card">
+      <input type="radio" name="payMethod" value="card" checked onchange="selectPayMethod('card')">
+      <div>
+        <div class="pay-method-label">Перевод на карту</div>
+        <div class="pay-method-desc">СБП / карта получателя</div>
+      </div>
+    </label>
+
+    <label class="pay-method" data-method="sbp">
+      <input type="radio" name="payMethod" value="sbp" onchange="selectPayMethod('sbp')">
+      <div>
+        <div class="pay-method-label">СБП по номеру телефона</div>
+        <div class="pay-method-desc">Перевод по номеру получателя</div>
+      </div>
+    </label>
+
+    <div class="pay-details" id="payDetails"></div>
+
+    <div class="pay-actions">
+      <button class="checkout-btn" onclick="confirmPayment()">Я оплатил</button>
+      <button class="pay-cancel" onclick="closePay()">Отмена</button>
+    </div>
+  </div>
+</div>
+
 <!-- ============ TOAST ============ -->
 <div class="toast" id="toast">Товар добавлен в корзину</div>
 
@@ -662,47 +720,10 @@
   <p>© 2026 NOMAD WEAR — Кастомная одежда с характером</p>
   <p style="margin-top:0.5rem">Сделано с душой для тех, кто не как все</p>
 
-  <!-- ===== РЕКВИЗИТЫ МАГАЗИНА ===== -->
-  <div class="requisites">
-    <h3>Реквизиты магазина</h3>
-    <div class="requisites-grid">
-      <div>
-        <span class="req-label">Полное наименование</span>
-        <span class="req-value">ИП Иванов Иван Иванович</span>
-      </div>
-      <div>
-        <span class="req-label">ИНН</span>
-        <span class="req-value">000000000000</span>
-      </div>
-      <div>
-        <span class="req-label">ОГРНИП</span>
-        <span class="req-value">300000000000000</span>
-      </div>
-      <div>
-        <span class="req-label">Юридический адрес</span>
-        <span class="req-value">г. Москва, ул. Примерная, д. 1, офис 1</span>
-      </div>
-      <div>
-        <span class="req-label">Телефон</span>
-        <span class="req-value">+7 (900) 000-00-00</span>
-      </div>
-      <div>
-        <span class="req-label">Email</span>
-        <span class="req-value">info@nomadwear.ru</span>
-      </div>
-      <div>
-        <span class="req-label">Часы работы</span>
-        <span class="req-value">Пн–Пт: 10:00–19:00</span>
-      </div>
-      <div>
-        <span class="req-label">Сайт</span>
-        <span class="req-value">nomadwear.ru</span>
-      </div>
-    </div>
-    <div class="req-note">
-      * Заполните блок своими реальными данными. Для интернет-магазина в РФ обычно указываются:
-      ИНН, ОГРН/ОГРНИП, юридический адрес, контактный телефон и email.
-    </div>
+  <div class="footer-contacts">
+    <a href="tel:+79000000000">+7 (900) 000-00-00</a>
+    <span>·</span>
+    <a href="mailto:info@nomadwear.ru">info@nomadwear.ru</a>
   </div>
 </footer>
 
@@ -741,10 +762,29 @@ const styleNames = {
 };
 
 /* ============================================================
+   РЕКВИЗИТЫ ПОЛУЧАТЕЛЯ (НЕ ВЫВОДЯТСЯ В HTML)
+   Заполните своими данными — показываются только в окне оплаты
+   ============================================================ */
+const PAYMENT_RECIPIENT = {
+  card: {
+    label: 'Номер карты',
+    value: '0000 0000 0000 0000',
+    holder: 'ИВАНОВ ИВАН ИВАНОВИЧ',
+    bank: 'Банк получателя'
+  },
+  sbp: {
+    label: 'Телефон для СБП',
+    value: '+7 (900) 000-00-00',
+    holder: 'ИВАНОВ ИВАН ИВАНОВИЧ'
+  }
+};
+
+/* ============================================================
    СОСТОЯНИЕ
    ============================================================ */
 let currentStyle = 'all';
 let cart = JSON.parse(localStorage.getItem('nomadwear_cart') || '[]');
+let currentPayMethod = 'card';
 
 /* ============================================================
    НАВИГАЦИЯ МЕЖДУ СТРАНИЦАМИ
@@ -862,7 +902,7 @@ function updateCartUI() {
 }
 
 /* ============================================================
-   МОДАЛКА
+   МОДАЛКА КОРЗИНЫ
    ============================================================ */
 function openCart() {
   document.getElementById('cartOverlay').classList.add('open');
@@ -877,14 +917,55 @@ function closeCartOutside(e) {
 }
 
 /* ============================================================
-   ОФОРМЛЕНИЕ ЗАКАЗА
+   ОФОРМЛЕНИЕ ЗАКАЗА -> ОКНО ОПЛАТЫ
    ============================================================ */
 function checkout() {
   if (cart.length === 0) return;
-  alert('✅ Заказ оформлен!\n\nМы свяжемся с вами для подтверждения.');
+  currentPayMethod = 'card';
+  selectPayMethod('card');
+  document.getElementById('payOverlay').classList.add('open');
+}
+
+function selectPayMethod(method) {
+  currentPayMethod = method;
+  document.querySelectorAll('.pay-method').forEach(el => {
+    el.classList.toggle('selected', el.dataset.method === method);
+  });
+
+  const rec = PAYMENT_RECIPIENT[method];
+  const details = document.getElementById('payDetails');
+  if (!rec) { details.classList.remove('show'); return; }
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+  let rows = `
+    <div class="pay-row"><span>${rec.label}</span><span>${rec.value}</span></div>
+    <div class="pay-row"><span>Получатель</span><span>${rec.holder}</span></div>
+  `;
+  if (rec.bank) {
+    rows += `<div class="pay-row"><span>Банк</span><span>${rec.bank}</span></div>`;
+  }
+  rows += `<div class="pay-row"><span>Сумма к оплате</span><span>${total.toLocaleString('ru-RU')} ₽</span></div>`;
+
+  details.innerHTML = rows;
+  details.classList.add('show');
+}
+
+function closePay() {
+  document.getElementById('payOverlay').classList.remove('open');
+}
+
+function closePayOutside(e) {
+  if (e.target.id === 'payOverlay') closePay();
+}
+
+function confirmPayment() {
+  if (cart.length === 0) return;
+  alert('✅ Спасибо! Мы получили заявку.\n\nПроверьте перевод и свяжитесь с нами для подтверждения.');
   cart = [];
   saveCart();
   updateCartUI();
+  closePay();
   closeCart();
 }
 
