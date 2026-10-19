@@ -32,11 +32,36 @@
     color: var(--text);
     line-height: 1.6;
     overflow-x: hidden;
-    background-image:
+    position: relative;
+  }
+
+  /* ---------- ФОН С КАРТИНКОЙ (ЗАБЛЮРЕН) ---------- */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url('bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(6px) brightness(0.35);
+    transform: scale(1.06); /* убирает светлые края от blur */
+    z-index: -2;
+    pointer-events: none;
+  }
+
+  /* Затемняющая вуаль поверх фона + лёгкая металлическая текстура */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
       radial-gradient(ellipse at 20% 0%, rgba(200, 208, 216, 0.06) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 100%, rgba(200, 208, 216, 0.05) 0%, transparent 50%),
-      repeating-linear-gradient(45deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 6px);
-    background-attachment: fixed;
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 6px),
+      rgba(13, 13, 15, 0.55);
+    z-index: -1;
+    pointer-events: none;
   }
 
   a { color: inherit; text-decoration: none; }
@@ -47,8 +72,8 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(13, 13, 15, 0.85);
-    backdrop-filter: blur(12px);
+    background: rgba(13, 13, 15, 0.75);
+    backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
     box-shadow: 0 1px 0 rgba(200, 208, 216, 0.08), 0 4px 20px rgba(0,0,0,0.5);
   }
@@ -233,7 +258,8 @@
   }
 
   .product-card {
-    background: linear-gradient(160deg, #1f1f26 0%, #191920 50%, #1d1d24 100%);
+    background: linear-gradient(160deg, rgba(31,31,38,0.92) 0%, rgba(25,25,32,0.92) 50%, rgba(29,29,36,0.92) 100%);
+    backdrop-filter: blur(8px);
     border: 1px solid var(--border);
     border-radius: 16px;
     overflow: hidden;
@@ -574,9 +600,8 @@
     text-align: center;
     color: var(--muted);
     font-size: 0.9rem;
-    background-image:
-      radial-gradient(ellipse at 50% 0%, rgba(200,208,216,0.04) 0%, transparent 60%),
-      repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 8px);
+    background: rgba(13, 13, 15, 0.6);
+    backdrop-filter: blur(8px);
   }
   footer .logo { margin-bottom: 1rem; }
 
