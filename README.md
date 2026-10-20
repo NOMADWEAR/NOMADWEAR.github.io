@@ -673,7 +673,7 @@
 <div id="page-home" class="page active">
   <section class="hero">
     <h1>Одежда, которая<br>говорит <span class="accent">за тебя</span></h1>
-    <p>Кастомный принт, ограниченные дропы и стили от sk8 до gothic. Создай вещь, которой больше ни у кого не будет.</p>
+    <p>Кастомный принт, ограниченные дропы и стили от sk8 до drill. Купи вещь, которой больше ни у кого не будет.</p>
     <button class="hero-cta" onclick="showCatalog()">Смотреть каталог →</button>
   </section>
 </div>
