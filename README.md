@@ -788,7 +788,7 @@
   <p style="margin-top:0.5rem">Сделано с душой для тех, кто не как все</p>
 
   <div class="footer-contacts">
-    <a href="tel:+79000000000">+7 (900) 000-00-00</a>
+    <a href="tel:@nomadwearshop">@nomadwearshop</a>
     <span>·</span>
     <a href="mailto:info@nomadwear.ru">info@nomadwear.ru</a>
   </div>
