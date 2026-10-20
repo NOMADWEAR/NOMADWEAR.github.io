@@ -453,15 +453,39 @@
   .cart-item-name { font-size: 0.9rem; font-weight: 600; }
   .cart-item-price { color: var(--muted); font-size: 0.8rem; }
 
-  .remove-btn {
-    background: transparent;
-    border: none;
-    color: var(--accent-2);
-    font-size: 0.8rem;
-    cursor: pointer;
-    font-weight: 600;
+  /* ---------- QTY CONTROLS ---------- */
+  .qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
   }
-  .remove-btn:hover { text-decoration: underline; }
+  .qty-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .qty-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent-light);
+  }
+  .qty-btn:active { transform: scale(0.9); }
+  .qty-value {
+    min-width: 22px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
 
   .cart-empty {
     text-align: center;
@@ -905,8 +929,24 @@ function addToCart(id) {
   showToast(`${product.name} добавлен в корзину`);
 }
 
-function removeFromCart(id) {
-  cart = cart.filter(item => item.id !== id);
+/* Увеличить количество на 1 */
+function increaseQty(id) {
+  const item = cart.find(item => item.id === id);
+  if (!item) return;
+  item.qty += 1;
+  saveCart();
+  updateCartUI();
+}
+
+/* Уменьшить количество на 1. Если qty = 1 — удаляем товар полностью */
+function decreaseQty(id) {
+  const item = cart.find(item => item.id === id);
+  if (!item) return;
+  if (item.qty > 1) {
+    item.qty -= 1;
+  } else {
+    cart = cart.filter(i => i.id !== id);
+  }
   saveCart();
   updateCartUI();
 }
@@ -934,10 +974,14 @@ function updateCartUI() {
     <div class="cart-item">
       <div class="cart-item-img"></div>
       <div class="cart-item-info">
-        <div class="cart-item-name">${item.name} × ${item.qty}</div>
+        <div class="cart-item-name">${item.name}</div>
         <div class="cart-item-price">${(item.price * item.qty).toLocaleString('ru-RU')} ₽</div>
       </div>
-      <button class="remove-btn" onclick="removeFromCart(${item.id})">Удалить</button>
+      <div class="qty-controls">
+        <button class="qty-btn" onclick="decreaseQty(${item.id})" title="Убрать одну">−</button>
+        <span class="qty-value">${item.qty}</span>
+        <button class="qty-btn" onclick="increaseQty(${item.id})" title="Добавить одну">+</button>
+      </div>
     </div>
   `).join('');
 
@@ -1031,18 +1075,16 @@ function processPayment() {
   if (cart.length === 0) return;
 
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-  const outSum = total.toFixed(2); // Сумма в формате 4900.00
-  const invId = Math.floor(Date.now() / 1000); // Уникальный номер заказа (время в секундах)
+  const outSum = total.toFixed(2);
+  const invId = Math.floor(Date.now() / 1000);
 
-  // Генерация подписи (SignatureValue).
-  // ВНИМАНИЕ: Это небезопасно для реального использования! 
+  // ВНИМАНИЕ: Генерация подписи на клиенте небезопасна.
   // Для продакшена нужен серверный скрипт.
   const signatureString = `${ROBOKASSA_CONFIG.login}:${outSum}:${invId}:${ROBOKASSA_CONFIG.password1}`;
   const signatureValue = md5(signatureString);
 
-  // Создаём iframe
   const formContainer = document.getElementById('robokassaForm');
-  formContainer.innerHTML = ''; // очищаем
+  formContainer.innerHTML = '';
   formContainer.style.display = 'block';
 
   const iframe = document.createElement('iframe');
@@ -1052,7 +1094,6 @@ function processPayment() {
   iframe.setAttribute('frameborder', '0');
   iframe.setAttribute('allowtransparency', 'true');
 
-  // Собираем URL для Robokassa
   const params = new URLSearchParams({
     MerchantLogin: ROBOKASSA_CONFIG.login,
     OutSum: outSum,
@@ -1061,24 +1102,18 @@ function processPayment() {
     SignatureValue: signatureValue,
     Culture: 'ru',
     Encoding: 'utf-8',
-    IsTest: ROBOKASSA_CONFIG.isTestMode ? '1' : '0' // Режим тестирования
+    IsTest: ROBOKASSA_CONFIG.isTestMode ? '1' : '0'
   });
 
-  // Используем тестовый или боевой URL
-  const baseUrl = ROBOKASSA_CONFIG.isTestMode 
-    ? 'https://auth.robokassa.ru/Merchant/Index.aspx' 
-    : 'https://auth.robokassa.ru/Merchant/Index.aspx';
-
+  const baseUrl = 'https://auth.robokassa.ru/Merchant/Index.aspx';
   iframe.src = `${baseUrl}?${params.toString()}`;
   
   formContainer.appendChild(iframe);
 
-  // Скрываем кнопку и методы выбора, так как iframe уже открыт
   document.getElementById('payMethodsList').style.display = 'none';
   document.getElementById('payButton').style.display = 'none';
   document.getElementById('payDetails').classList.remove('show');
 
-  // Меняем кнопку "Отмена" на "Закрыть", чтобы можно было выйти
   const cancelBtn = document.querySelector('.pay-cancel');
   cancelBtn.textContent = 'Закрыть';
 }
@@ -1088,7 +1123,6 @@ function processPayment() {
    ============================================================ */
 function closePay() {
   document.getElementById('payOverlay').classList.remove('open');
-  // Возвращаем кнопки в исходное состояние
   document.getElementById('payMethodsList').style.display = 'block';
   document.getElementById('payButton').style.display = 'block';
   document.getElementById('robokassaForm').style.display = 'none';
