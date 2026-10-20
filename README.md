@@ -8,6 +8,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- Verification: f66d3dcca44a8022 -->
 
+<!-- ===== БИБЛИОТЕКА ДЛЯ ПОДПИСИ (MD5) ===== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
+
 <style>
   /* ---------- БАЗА ---------- */
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -40,17 +43,16 @@
     content: '';
     position: fixed;
     inset: 0;
-    background-image: url('MG_2661.JPG');
+    background-image: url('MG_2661.JPG'); /* ИМЯ ВАШЕГО ФАЙЛА */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     filter: blur(6px) brightness(0.35);
-    transform: scale(1.06); /* убирает светлые края от blur */
+    transform: scale(1.06);
     z-index: -2;
     pointer-events: none;
   }
 
-  /* Затемняющая вуаль поверх фона + лёгкая металлическая текстура */
   body::after {
     content: '';
     position: fixed;
@@ -554,6 +556,16 @@
   .pay-details .pay-row span:first-child { color: var(--muted); }
   .pay-details .pay-row span:last-child { font-weight: 700; word-break: break-all; }
 
+  /* Форма Robokassa внутри окна */
+  #robokassaForm {
+    display: none;
+    margin-top: 1rem;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: #fff;
+  }
+
   .pay-actions { display: flex; gap: 0.6rem; margin-top: 1.2rem; }
   .pay-actions .checkout-btn { margin-top: 0; }
   .pay-cancel {
@@ -706,28 +718,37 @@
 <div class="modal-overlay" id="payOverlay" onclick="closePayOutside(event)">
   <div class="pay-modal" onclick="event.stopPropagation()">
     <h2>Оплата заказа</h2>
-    <p class="pay-sub">Выберите способ оплаты. Реквизиты получателя появятся после выбора.</p>
+    <p class="pay-sub">Выберите способ оплаты.</p>
 
-    <label class="pay-method selected" data-method="card">
-      <input type="radio" name="payMethod" value="card" checked onchange="selectPayMethod('card')">
-      <div>
-        <div class="pay-method-label">Перевод на карту</div>
-        <div class="pay-method-desc">СБП / карта получателя</div>
-      </div>
-    </label>
+    <!-- Выбор метода оплаты -->
+    <div id="payMethodsList">
+      <label class="pay-method selected" data-method="card">
+        <input type="radio" name="payMethod" value="card" checked onchange="selectPayMethod('card')">
+        <div>
+          <div class="pay-method-label">Банковская карта (Robokassa)</div>
+          <div class="pay-method-desc">Безопасная оплата на стороне банка</div>
+        </div>
+      </label>
 
-    <label class="pay-method" data-method="sbp">
-      <input type="radio" name="payMethod" value="sbp" onchange="selectPayMethod('sbp')">
-      <div>
-        <div class="pay-method-label">СБП по номеру телефона</div>
-        <div class="pay-method-desc">Перевод по номеру получателя</div>
-      </div>
-    </label>
+      <label class="pay-method" data-method="sbp">
+        <input type="radio" name="payMethod" value="sbp" onchange="selectPayMethod('sbp')">
+        <div>
+          <div class="pay-method-label">СБП (по номеру телефона)</div>
+          <div class="pay-method-desc">Перевод по номеру получателя</div>
+        </div>
+      </label>
+    </div>
 
+    <!-- Информация о реквизитах для ручного перевода -->
     <div class="pay-details" id="payDetails"></div>
 
-    <div class="pay-actions">
-      <button class="checkout-btn" onclick="confirmPayment()">Я оплатил</button>
+    <!-- Контейнер для встраиваемой формы Robokassa -->
+    <div id="robokassaContainer" style="margin-top: 1rem;">
+      <div id="robokassaForm"></div>
+    </div>
+
+    <div class="pay-actions" id="payActions">
+      <button class="checkout-btn" id="payButton" onclick="processPayment()">Оплатить онлайн</button>
       <button class="pay-cancel" onclick="closePay()">Отмена</button>
     </div>
   </div>
@@ -750,6 +771,15 @@
 </footer>
 
 <script>
+/* ============================================================
+   1. НАСТРОЙКИ ROBOKASSA (ВПИШИТЕ СВОИ ДАННЫЕ)
+   ============================================================ */
+const ROBOKASSA_CONFIG = {
+  login: 'ВАШ_ЛОГИН_В_ROBOKASSA', // Например: 'nomadwear'
+  password1: 'ВАШ_ПАРОЛЬ_1',       // Пароль #1 из личного кабинета
+  isTestMode: true                 // true для теста (деньги не списываются)
+};
+
 /* ============================================================
    ДАННЫЕ ТОВАРОВ
    ============================================================ */
@@ -779,8 +809,7 @@ const styleNames = {
 };
 
 /* ============================================================
-   РЕКВИЗИТЫ ПОЛУЧАТЕЛЯ (НЕ ВЫВОДЯТСЯ В HTML)
-   Заполните своими данными — показываются только в окне оплаты
+   РЕКВИЗИТЫ ДЛЯ РУЧНОГО ПЕРЕВОДА (СБП)
    ============================================================ */
 const PAYMENT_RECIPIENT = {
   card: {
@@ -937,7 +966,21 @@ function closeCartOutside(e) {
    ============================================================ */
 function checkout() {
   if (cart.length === 0) return;
+  
+  // Сбрасываем окно оплаты
   currentPayMethod = 'card';
+  document.querySelectorAll('.pay-method').forEach(el => {
+    el.classList.toggle('selected', el.dataset.method === 'card');
+    const radio = el.querySelector('input');
+    if (radio) radio.checked = (el.dataset.method === 'card');
+  });
+  
+  // Очищаем старую форму
+  document.getElementById('robokassaForm').innerHTML = '';
+  document.getElementById('robokassaForm').style.display = 'none';
+  document.getElementById('payMethodsList').style.display = 'block';
+  document.getElementById('payButton').style.display = 'block';
+  
   selectPayMethod('card');
   document.getElementById('payOverlay').classList.add('open');
 }
@@ -948,41 +991,113 @@ function selectPayMethod(method) {
     el.classList.toggle('selected', el.dataset.method === method);
   });
 
-  const rec = PAYMENT_RECIPIENT[method];
   const details = document.getElementById('payDetails');
-  if (!rec) { details.classList.remove('show'); return; }
+  const robokassaForm = document.getElementById('robokassaForm');
+  const payButton = document.getElementById('payButton');
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  if (method === 'card') {
+    // Для карты показываем кнопку Robokassa, скрываем реквизиты
+    details.classList.remove('show');
+    robokassaForm.style.display = 'none';
+    payButton.style.display = 'block';
+    payButton.textContent = 'Оплатить картой';
+  } else {
+    // Для СБП показываем реквизиты
+    const rec = PAYMENT_RECIPIENT[method];
+    if (!rec) { details.classList.remove('show'); return; }
 
-  let rows = `
-    <div class="pay-row"><span>${rec.label}</span><span>${rec.value}</span></div>
-    <div class="pay-row"><span>Получатель</span><span>${rec.holder}</span></div>
-  `;
-  if (rec.bank) {
-    rows += `<div class="pay-row"><span>Банк</span><span>${rec.bank}</span></div>`;
+    const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+    let rows = `
+      <div class="pay-row"><span>${rec.label}</span><span>${rec.value}</span></div>
+      <div class="pay-row"><span>Получатель</span><span>${rec.holder}</span></div>
+    `;
+    if (rec.bank) {
+      rows += `<div class="pay-row"><span>Банк</span><span>${rec.bank}</span></div>`;
+    }
+    rows += `<div class="pay-row"><span>Сумма к оплате</span><span>${total.toLocaleString('ru-RU')} ₽</span></div>`;
+
+    details.innerHTML = rows;
+    details.classList.add('show');
+    robokassaForm.style.display = 'none';
+    payButton.style.display = 'none'; // Скрываем кнопку онлайн-оплаты
   }
-  rows += `<div class="pay-row"><span>Сумма к оплате</span><span>${total.toLocaleString('ru-RU')} ₽</span></div>`;
-
-  details.innerHTML = rows;
-  details.classList.add('show');
 }
 
+/* ============================================================
+   ОПЛАТА ЧЕРЕЗ ROBOKASSA (iFrame)
+   ============================================================ */
+function processPayment() {
+  if (cart.length === 0) return;
+
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const outSum = total.toFixed(2); // Сумма в формате 4900.00
+  const invId = Math.floor(Date.now() / 1000); // Уникальный номер заказа (время в секундах)
+
+  // Генерация подписи (SignatureValue).
+  // ВНИМАНИЕ: Это небезопасно для реального использования! 
+  // Для продакшена нужен серверный скрипт.
+  const signatureString = `${ROBOKASSA_CONFIG.login}:${outSum}:${invId}:${ROBOKASSA_CONFIG.password1}`;
+  const signatureValue = md5(signatureString);
+
+  // Создаём iframe
+  const formContainer = document.getElementById('robokassaForm');
+  formContainer.innerHTML = ''; // очищаем
+  formContainer.style.display = 'block';
+
+  const iframe = document.createElement('iframe');
+  iframe.style.width = '100%';
+  iframe.style.height = '500px';
+  iframe.style.border = 'none';
+  iframe.setAttribute('frameborder', '0');
+  iframe.setAttribute('allowtransparency', 'true');
+
+  // Собираем URL для Robokassa
+  const params = new URLSearchParams({
+    MerchantLogin: ROBOKASSA_CONFIG.login,
+    OutSum: outSum,
+    InvId: invId,
+    Description: 'Оплата заказа в NOMAD WEAR',
+    SignatureValue: signatureValue,
+    Culture: 'ru',
+    Encoding: 'utf-8',
+    IsTest: ROBOKASSA_CONFIG.isTestMode ? '1' : '0' // Режим тестирования
+  });
+
+  // Используем тестовый или боевой URL
+  const baseUrl = ROBOKASSA_CONFIG.isTestMode 
+    ? 'https://auth.robokassa.ru/Merchant/Index.aspx' 
+    : 'https://auth.robokassa.ru/Merchant/Index.aspx';
+
+  iframe.src = `${baseUrl}?${params.toString()}`;
+  
+  formContainer.appendChild(iframe);
+
+  // Скрываем кнопку и методы выбора, так как iframe уже открыт
+  document.getElementById('payMethodsList').style.display = 'none';
+  document.getElementById('payButton').style.display = 'none';
+  document.getElementById('payDetails').classList.remove('show');
+
+  // Меняем кнопку "Отмена" на "Закрыть", чтобы можно было выйти
+  const cancelBtn = document.querySelector('.pay-cancel');
+  cancelBtn.textContent = 'Закрыть';
+}
+
+/* ============================================================
+   ЗАКРЫТИЕ ОКНА ОПЛАТЫ
+   ============================================================ */
 function closePay() {
   document.getElementById('payOverlay').classList.remove('open');
+  // Возвращаем кнопки в исходное состояние
+  document.getElementById('payMethodsList').style.display = 'block';
+  document.getElementById('payButton').style.display = 'block';
+  document.getElementById('robokassaForm').style.display = 'none';
+  document.getElementById('robokassaForm').innerHTML = '';
+  document.querySelector('.pay-cancel').textContent = 'Отмена';
 }
 
 function closePayOutside(e) {
   if (e.target.id === 'payOverlay') closePay();
-}
-
-function confirmPayment() {
-  if (cart.length === 0) return;
-  alert('Спасибо! Мы получили заявку.\n\nПроверьте перевод и свяжитесь с нами для подтверждения.');
-  cart = [];
-  saveCart();
-  updateCartUI();
-  closePay();
-  closeCart();
 }
 
 /* ============================================================
