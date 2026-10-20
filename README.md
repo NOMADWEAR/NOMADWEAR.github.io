@@ -788,8 +788,7 @@
   <p style="margin-top:0.5rem">Сделано с душой для тех, кто не как все</p>
 
   <div class="footer-contacts">
-    <!-- ИСПРАВЛЕНА ССЫЛКА НА ТЕЛЕГРАМ -->
-    <a href="https://t.me/nomadwearshop" target="_blank" rel="noopener">@nomadwearshop</a>
+    <a href="https://t.me/nomadwearshop" target="_blank" rel="noopener">tg:@nomadwearshop</a>
     <span>·</span>
     <a href="mailto:info@nomadwear.ru">info@nomadwear.ru</a>
   </div>
