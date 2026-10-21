@@ -205,6 +205,13 @@
     margin: 0 auto 2rem;
   }
 
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem; /* Отступ между кнопками */
+  }
+
   .hero-cta {
     display: inline-block;
     background: var(--accent-grad);
@@ -217,6 +224,7 @@
     border: 1px solid #e6edf2;
     transition: transform 0.2s, box-shadow 0.2s;
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 4px 14px rgba(0,0,0,0.4);
+    width: fit-content;
   }
   .hero-cta:hover {
     transform: translateY(-3px);
@@ -866,7 +874,12 @@
   <section class="hero">
     <h1>Одежда, которая<br>говорит <span class="accent">за тебя</span></h1>
     <p>Кастомный принт, ограниченные дропы и стили от sk8 до drill. Купи вещь, которой больше ни у кого не будет.</p>
-    <button class="hero-cta" onclick="showCatalog()">Смотреть каталог →</button>
+    
+    <!-- Обертка для кнопок -->
+    <div class="hero-actions">
+      <button class="hero-cta" onclick="showCatalog()">Смотреть каталог →</button>
+      <button class="hero-cta" onclick="showCustomOrder()">Кастом под заказ →</button>
+    </div>
   </section>
 </div>
 
