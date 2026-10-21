@@ -38,12 +38,12 @@
     position: relative;
   }
 
-  /* ---------- ФОН С КАРТИНКОЙ (БОЛЕЕ ВЫРАЖЕННЫЙ) ---------- */
+  /* ---------- ФОН С КАРТИНКОЙ ---------- */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background-image: url('MG_2661.JPG'); /* ИМЯ ВАШЕГО ФАЙЛА */
+    background-image: url('MG_2661.JPG');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -390,7 +390,7 @@
     border-color: var(--accent);
   }
 
-  /* ---------- ABOUT (РАСКРЫВАЮЩИЙСЯ БЛОК ВНИЗУ) ---------- */
+  /* ---------- ABOUT ---------- */
   .about-wrap {
     max-width: 1280px;
     margin: 0 auto;
@@ -428,7 +428,6 @@
     transform: rotate(180deg);
   }
 
-  /* Контейнер раскрытия — плавно растягивает страницу вниз */
   .about-reveal {
     display: grid;
     grid-template-rows: 0fr;
@@ -513,6 +512,210 @@
     border-radius: 2px;
   }
 
+  /* ---------- МОДАЛКИ (ЖЁСТКАЯ ФИКСАЦИЯ) ---------- */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    display: none; /* Скрыто по умолчанию */
+    align-items: center;
+    justify-content: center;
+    z-index: 9999; /* Поверх всего */
+    padding: 1rem;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .cart-modal, .pay-modal {
+    background: linear-gradient(160deg, #1a1a20 0%, #14141a 100%);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 480px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 1.5rem;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 20px 60px rgba(0,0,0,0.7);
+    position: relative;
+  }
+
+  .cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+  }
+  .cart-header h2 { font-size: 1.3rem; }
+
+  .close-btn {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 0.5rem;
+  }
+  .close-btn:hover { color: var(--text); }
+
+  .cart-item {
+    display: flex;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+  }
+  .cart-item-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #26262e, #32323c);
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+  }
+  .cart-item-info { flex: 1; }
+  .cart-item-name { font-size: 0.9rem; font-weight: 600; }
+  .cart-item-price { color: var(--muted); font-size: 0.8rem; }
+
+  .qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+  .qty-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+  .qty-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent-light);
+  }
+  .qty-btn:active { transform: scale(0.9); }
+  .qty-value {
+    min-width: 22px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .cart-empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 2rem 0;
+  }
+
+  .cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 2px solid var(--border);
+    font-size: 1.1rem;
+    font-weight: 800;
+  }
+
+  .checkout-btn {
+    width: 100%;
+    margin-top: 1rem;
+    background: var(--accent-grad);
+    color: #0d0d0f;
+    border: 1px solid #e6edf2;
+    padding: 1rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 4px 14px rgba(0,0,0,0.4);
+  }
+  .checkout-btn:hover {
+    transform: scale(1.02);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 24px rgba(200,208,216,0.25);
+  }
+  .checkout-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .pay-modal h2 { font-size: 1.3rem; margin-bottom: 0.4rem; }
+  .pay-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.2rem; }
+
+  .pay-method {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 0.6rem;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    background: rgba(255,255,255,0.02);
+  }
+  .pay-method:hover { border-color: var(--accent); }
+  .pay-method.selected {
+    border-color: var(--accent);
+    background: rgba(200,208,216,0.06);
+  }
+  .pay-method input { accent-color: #c8d0d8; }
+  .pay-method-label { font-weight: 600; font-size: 0.9rem; }
+  .pay-method-desc { color: var(--muted); font-size: 0.75rem; }
+
+  .pay-details {
+    margin-top: 0.8rem;
+    padding: 0.9rem 1rem;
+    border-radius: 12px;
+    background: rgba(0,0,0,0.3);
+    border: 1px dashed var(--border);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    display: none;
+  }
+  .pay-details.show { display: block; }
+  .pay-details .pay-row { display: flex; justify-content: space-between; gap: 1rem; }
+  .pay-details .pay-row span:first-child { color: var(--muted); }
+  .pay-details .pay-row span:last-child { font-weight: 700; word-break: break-all; }
+
+  #robokassaForm {
+    display: none;
+    margin-top: 1rem;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: #fff;
+  }
+
+  .pay-actions { display: flex; gap: 0.6rem; margin-top: 1.2rem; }
+  .pay-actions .checkout-btn { margin-top: 0; }
+  .pay-cancel {
+    flex: 0 0 auto;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 1rem 1.4rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .pay-cancel:hover { color: var(--text); border-color: var(--muted); }
+
   /* ---------- TOAST ---------- */
   .toast {
     position: fixed;
@@ -567,11 +770,9 @@
   }
   .footer-about-link:hover { text-decoration: underline; }
 
-  /* ---------- СКРЫТИЕ / ПОКАЗ СТРАНИЦ ---------- */
   .page { display: none; }
   .page.active { display: block; }
 
-  /* ---------- MOBILE ---------- */
   @media (max-width: 768px) {
     .nav-links { display: none; }
     .nav { padding: 1rem; }
@@ -584,12 +785,13 @@
     .price { font-size: 1rem; }
     .add-btn { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
     .about-card { padding: 1.5rem 1.2rem 1.8rem; }
+    .pay-actions { flex-direction: column; }
+    .pay-cancel { width: 100%; }
   }
 </style>
 </head>
 <body>
 
-<!-- ===== ВЕРИФИКАЦИЯ (скрытый блок) ===== -->
 <div style="display:none" id="verification">Verification: f66d3dcca44a8022</div>
 
 <!-- ============ HEADER ============ -->
@@ -607,7 +809,7 @@
   </nav>
 </header>
 
-<!-- ============ ГЛАВНАЯ СТРАНИЦА ============ -->
+<!-- ============ ГЛАВНАЯ ============ -->
 <div id="page-home" class="page active">
   <section class="hero">
     <h1>Одежда, которая<br>говорит <span class="accent">за тебя</span></h1>
@@ -616,14 +818,12 @@
   </section>
 </div>
 
-<!-- ============ СТРАНИЦА КАТАЛОГА ============ -->
+<!-- ============ КАТАЛОГ ============ -->
 <div id="page-catalog" class="page">
   <section class="styles-section">
     <button class="back-btn" onclick="showHome()">← Назад на главную</button>
-
     <h2 class="section-title">Выбери свой стиль</h2>
     <p class="section-sub">Каждая вещь — под конкретную субкультуру и настроение</p>
-
     <div class="tabs" id="tabs">
       <button class="tab active" data-style="all">Все</button>
       <button class="tab" data-style="sk8">Sk8</button>
@@ -631,12 +831,11 @@
       <button class="tab" data-style="y2k">Y2K</button>
       <button class="tab" data-style="vintage">Vintage</button>
     </div>
-
     <div class="products" id="products"></div>
   </section>
 </div>
 
-<!-- ============ РАСКРЫВАЮЩИЙСЯ БЛОК "О НАС" (РАСТЯГИВАЕТ САЙТ ВНИЗ) ============ -->
+<!-- ============ О НАС ============ -->
 <section class="about-wrap" id="aboutWrap">
   <button class="about-toggle" onclick="toggleAbout()">
     <span class="toggle-label">О нас — предыстория</span>
@@ -648,42 +847,14 @@
       <div class="about-card">
         <h2>Предыстория <span class="accent">NOMAD WEAR</span></h2>
         <p class="about-lead">Как всё начиналось — без маркетинга, честно.</p>
-
         <div class="about-text">
-          <p>
-            <strong>NOMAD WEAR</strong> родился не в бизнес-инкубаторе и не на курсах по предпринимательству.
-            Он родился в гараже, где пахло краской, старым скейтом и растворителем. Мы красили первые футболки
-            вручную — криво, смело и без права на ошибку. Первые двадцать штук ушли друзьям, которые носили их
-            в скейт-парках и на квартирниках.
-          </p>
-
-          <p>
-            Идея была простой: <em>одежда должна говорить за тебя, пока ты молчишь.</em> Никаких
-            «трендов сезона» и безликих принтов из масс-маркета. Только вещи, которые отражают
-            конкретную субкультуру — <strong>sk8</strong>, <strong>streetwear</strong>,
-            <strong>Y2K</strong>, <strong>vintage</strong>.
-          </p>
-
-          <p>
-            Мы не гонимся за тиражами в тысячи штук. Каждый дроп — ограничен, каждая вещь
-            прокрашена с вниманием к деталям. Если ты купил худи NOMAD WEAR — будь уверен:
-            такой же точно не будет ни у кого из твоего окружения. Мы делаем ставку на
-            <strong>уникальность</strong>, а не на скорость.
-          </p>
-
-          <p>
-            Сегодня NOMAD WEAR — это команда из нескольких человек, которые всё ещё сами
-            красят, пакуют и подписывают каждую посылку. Мы выросли из гаража, но
-            <em>остались теми же</em>: делаем вещи с характером для тех, кто не как все.
-          </p>
+          <p><strong>NOMAD WEAR</strong> родился не в бизнес-инкубаторе и не на курсах по предпринимательству. Он родился в гараже, где пахло краской, старым скейтом и растворителем. Мы красили первые футболки вручную — криво, смело и без права на ошибку. Первые двадцать штук ушли друзьям, которые носили их в скейт-парках и на квартирниках.</p>
+          <p>Идея была простой: <em>одежда должна говорить за тебя, пока ты молчишь.</em> Никаких «трендов сезона» и безликих принтов из масс-маркета. Только вещи, которые отражают конкретную субкультуру — <strong>sk8</strong>, <strong>streetwear</strong>, <strong>Y2K</strong>, <strong>vintage</strong>.</p>
+          <p>Мы не гонимся за тиражами в тысячи штук. Каждый дроп — ограничен, каждая вещь прокрашена с вниманием к деталям. Если ты купил худи NOMAD WEAR — будь уверен: такой же точно не будет ни у кого из твоего окружения. Мы делаем ставку на <strong>уникальность</strong>, а не на скорость.</p>
+          <p>Сегодня NOMAD WEAR — это команда из нескольких человек, которые всё ещё сами красят, пакуют и подписывают каждую посылку. Мы выросли из гаража, но <em>остались теми же</em>: делаем вещи с характером для тех, кто не как все.</p>
         </div>
-
         <div class="about-divider"></div>
-
-        <p class="about-text" style="margin-bottom:0">
-          <em>Спасибо, что носишь NOMAD WEAR. Это больше, чем одежда.</em>
-        </p>
-
+        <p class="about-text" style="margin-bottom:0"><em>Спасибо, что носишь NOMAD WEAR. Это больше, чем одежда.</em></p>
         <div class="about-signature">
           <span class="sig-line"></span>
           <span>Команда NOMAD WEAR · с 2024 года</span>
@@ -715,7 +886,6 @@
     <h2>Оплата заказа</h2>
     <p class="pay-sub">Выберите способ оплаты.</p>
 
-    <!-- Выбор метода оплаты -->
     <div id="payMethodsList">
       <label class="pay-method selected" data-method="card">
         <input type="radio" name="payMethod" value="card" checked onchange="selectPayMethod('card')">
@@ -724,7 +894,6 @@
           <div class="pay-method-desc">Безопасная оплата на стороне банка</div>
         </div>
       </label>
-
       <label class="pay-method" data-method="sbp">
         <input type="radio" name="payMethod" value="sbp" onchange="selectPayMethod('sbp')">
         <div>
@@ -734,10 +903,8 @@
       </label>
     </div>
 
-    <!-- Информация о реквизитах для ручного перевода -->
     <div class="pay-details" id="payDetails"></div>
 
-    <!-- Контейнер для встраиваемой формы Robokassa -->
     <div id="robokassaContainer" style="margin-top: 1rem;">
       <div id="robokassaForm"></div>
     </div>
@@ -757,7 +924,6 @@
   <div class="logo" onclick="showHome()" style="cursor:pointer">NOMAD<span>WEAR</span></div>
   <p>© 2026 NOMAD WEAR — Кастомная одежда с характером</p>
   <p style="margin-top:0.5rem">Сделано с душой для тех, кто не как все</p>
-
   <div class="footer-contacts">
     <a href="https://t.me/nomadwearshop" target="_blank" rel="noopener">tg:@nomadwearshop</a>
     <span>·</span>
@@ -768,70 +934,39 @@
 </footer>
 
 <script>
-/* ============================================================
-   1. НАСТРОЙКИ ROBOKASSA (ВПИШИТЕ СВОИ ДАННЫЕ)
-   ============================================================ */
 const ROBOKASSA_CONFIG = {
-  login: 'ВАШ_ЛОГИН_В_ROBOKASSA', // Например: 'nomadwear'
-  password1: 'ВАШ_ПАРОЛЬ_1',       // Пароль #1 из личного кабинета
-  isTestMode: true                 // true для теста (деньги не списываются)
+  login: 'ВАШ_ЛОГИН_В_ROBOKASSA',
+  password1: 'ВАШ_ПАРОЛЬ_1',
+  isTestMode: true
 };
 
-/* ============================================================
-   ДАННЫЕ ТОВАРОВ
-   ============================================================ */
 const products = [
   { id: 1,  name: 'Худи',            style: 'sk8',        price: 4900, tag: 'NEW' },
   { id: 2,  name: 'Футболка',        style: 'sk8',        price: 2400 },
   { id: 3,  name: 'Шапка',           style: 'sk8',        price: 1500 },
-
   { id: 4,  name: 'Худи',            style: 'streetwear', price: 5900, tag: 'HOT' },
   { id: 5,  name: 'Джоггеры',        style: 'streetwear', price: 4200 },
   { id: 6,  name: 'Куртка',          style: 'streetwear', price: 8900 },
-
   { id: 7,  name: 'Топ',             style: 'y2k',        price: 2900 },
   { id: 8,  name: 'Джинсы',          style: 'y2k',        price: 5400 },
   { id: 9,  name: 'Очки',            style: 'y2k',        price: 1900 },
-
   { id: 15, name: 'Джинсовка',       style: 'vintage',    price: 6800 },
   { id: 16, name: 'Футболка',        style: 'vintage',    price: 2600 },
 ];
 
 const styleNames = {
-  all: 'Все',
-  sk8: 'Sk8',
-  streetwear: 'Streetwear',
-  y2k: 'Y2K',
-  vintage: 'Vintage',
+  all: 'Все', sk8: 'Sk8', streetwear: 'Streetwear', y2k: 'Y2K', vintage: 'Vintage',
 };
 
-/* ============================================================
-   РЕКВИЗИТЫ ДЛЯ РУЧНОГО ПЕРЕВОДА (СБП)
-   ============================================================ */
 const PAYMENT_RECIPIENT = {
-  card: {
-    label: 'Номер карты',
-    value: '0000 0000 0000 0000',
-    holder: 'ИВАНОВ ИВАН ИВАНОВИЧ',
-    bank: 'Банк получателя'
-  },
-  sbp: {
-    label: 'Телефон для СБП',
-    value: '+7 (900) 000-00-00',
-    holder: 'ИВАНОВ ИВАН ИВАНОВИЧ'
-  }
+  card: { label: 'Номер карты', value: '0000 0000 0000 0000', holder: 'ИВАНОВ ИВАН ИВАНОВИЧ', bank: 'Банк получателя' },
+  sbp: { label: 'Телефон для СБП', value: '+7 (900) 000-00-00', holder: 'ИВАНОВ ИВАН ИВАНОВИЧ' }
 };
 
-/* ============================================================
-   СОСТОЯНИЕ
-   ============================================================ */
 let currentStyle = 'all';
 let cart = JSON.parse(localStorage.getItem('nomadwear_cart') || '[]');
 let currentPayMethod = 'card';
 
-/* ============================================================
-   НАВИГАЦИЯ МЕЖДУ СТРАНИЦАМИ
-   ============================================================ */
 function showHome() {
   document.getElementById('page-home').classList.add('active');
   document.getElementById('page-catalog').classList.remove('active');
@@ -845,39 +980,25 @@ function showCatalog() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* ============================================================
-   РАСКРЫВАЮЩИЙСЯ БЛОК "О НАС"
-   ============================================================ */
 function toggleAbout(forceOpen) {
   const wrap = document.getElementById('aboutWrap');
   const willOpen = (typeof forceOpen === 'boolean') ? forceOpen : !wrap.classList.contains('open');
-
   wrap.classList.toggle('open', willOpen);
   const label = wrap.querySelector('.toggle-label');
   if (label) label.textContent = willOpen ? 'Свернуть предысторию' : 'О нас — предыстория';
-
   if (willOpen) {
-    // Плавно прокручиваем к раскрытому блоку, чтобы пользователь увидел предысторию
     setTimeout(() => {
       wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 120);
   }
 }
 
-/* ============================================================
-   РЕНДЕР КАТАЛОГА
-   ============================================================ */
 function renderProducts() {
   const container = document.getElementById('products');
-  const filtered = currentStyle === 'all'
-    ? products
-    : products.filter(p => p.style === currentStyle);
-
+  const filtered = currentStyle === 'all' ? products : products.filter(p => p.style === currentStyle);
   container.innerHTML = filtered.map(p => `
     <div class="product-card">
-      <div class="product-img">
-        ${p.tag ? `<span class="product-tag">${p.tag}</span>` : ''}
-      </div>
+      <div class="product-img">${p.tag ? `<span class="product-tag">${p.tag}</span>` : ''}</div>
       <div class="product-info">
         <div class="product-style">${styleNames[p.style]}</div>
         <div class="product-name">${p.name}</div>
@@ -890,67 +1011,40 @@ function renderProducts() {
   `).join('');
 }
 
-/* ============================================================
-   ВКЛАДКИ СТИЛЕЙ
-   ============================================================ */
 document.getElementById('tabs').addEventListener('click', (e) => {
   const tab = e.target.closest('.tab');
   if (!tab) return;
-
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   tab.classList.add('active');
   currentStyle = tab.dataset.style;
   renderProducts();
 });
 
-/* ============================================================
-   КОРЗИНА
-   ============================================================ */
 function addToCart(id) {
   const product = products.find(p => p.id === id);
   const existing = cart.find(item => item.id === id);
-
-  if (existing) {
-    existing.qty += 1;
-  } else {
-    cart.push({ ...product, qty: 1 });
-  }
-
-  saveCart();
-  updateCartUI();
-  showToast(`${product.name} добавлен в корзину`);
+  if (existing) { existing.qty += 1; } else { cart.push({ ...product, qty: 1 }); }
+  saveCart(); updateCartUI(); showToast(`${product.name} добавлен в корзину`);
 }
 
-/* Увеличить количество на 1 */
 function increaseQty(id) {
   const item = cart.find(item => item.id === id);
   if (!item) return;
-  item.qty += 1;
-  saveCart();
-  updateCartUI();
+  item.qty += 1; saveCart(); updateCartUI();
 }
 
-/* Уменьшить количество на 1. Если qty = 1 — удаляем товар полностью */
 function decreaseQty(id) {
   const item = cart.find(item => item.id === id);
   if (!item) return;
-  if (item.qty > 1) {
-    item.qty -= 1;
-  } else {
-    cart = cart.filter(i => i.id !== id);
-  }
-  saveCart();
-  updateCartUI();
+  if (item.qty > 1) { item.qty -= 1; } else { cart = cart.filter(i => i.id !== id); }
+  saveCart(); updateCartUI();
 }
 
-function saveCart() {
-  localStorage.setItem('nomadwear_cart', JSON.stringify(cart));
-}
+function saveCart() { localStorage.setItem('nomadwear_cart', JSON.stringify(cart)); }
 
 function updateCartUI() {
   const count = cart.reduce((sum, item) => sum + item.qty, 0);
   document.getElementById('cartCount').textContent = count;
-
   const itemsContainer = document.getElementById('cartItems');
   const totalEl = document.getElementById('cartTotal');
   const checkoutBtn = document.getElementById('checkoutBtn');
@@ -982,41 +1076,22 @@ function updateCartUI() {
   checkoutBtn.disabled = false;
 }
 
-/* ============================================================
-   МОДАЛКА КОРЗИНЫ
-   ============================================================ */
-function openCart() {
-  document.getElementById('cartOverlay').classList.add('open');
-}
+function openCart() { document.getElementById('cartOverlay').classList.add('open'); }
+function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); }
+function closeCartOutside(e) { if (e.target.id === 'cartOverlay') closeCart(); }
 
-function closeCart() {
-  document.getElementById('cartOverlay').classList.remove('open');
-}
-
-function closeCartOutside(e) {
-  if (e.target.id === 'cartOverlay') closeCart();
-}
-
-/* ============================================================
-   ОФОРМЛЕНИЕ ЗАКАЗА -> ОКНО ОПЛАТЫ
-   ============================================================ */
 function checkout() {
   if (cart.length === 0) return;
-  
-  // Сбрасываем окно оплаты
   currentPayMethod = 'card';
   document.querySelectorAll('.pay-method').forEach(el => {
     el.classList.toggle('selected', el.dataset.method === 'card');
     const radio = el.querySelector('input');
     if (radio) radio.checked = (el.dataset.method === 'card');
   });
-  
-  // Очищаем старую форму
   document.getElementById('robokassaForm').innerHTML = '';
   document.getElementById('robokassaForm').style.display = 'none';
   document.getElementById('payMethodsList').style.display = 'block';
   document.getElementById('payButton').style.display = 'block';
-  
   selectPayMethod('card');
   document.getElementById('payOverlay').classList.add('open');
 }
@@ -1026,93 +1101,58 @@ function selectPayMethod(method) {
   document.querySelectorAll('.pay-method').forEach(el => {
     el.classList.toggle('selected', el.dataset.method === method);
   });
-
   const details = document.getElementById('payDetails');
   const robokassaForm = document.getElementById('robokassaForm');
   const payButton = document.getElementById('payButton');
 
   if (method === 'card') {
-    // Для карты показываем кнопку Robokassa, скрываем реквизиты
     details.classList.remove('show');
     robokassaForm.style.display = 'none';
     payButton.style.display = 'block';
     payButton.textContent = 'Оплатить картой';
   } else {
-    // Для СБП показываем реквизиты
     const rec = PAYMENT_RECIPIENT[method];
     if (!rec) { details.classList.remove('show'); return; }
-
     const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-
     let rows = `
       <div class="pay-row"><span>${rec.label}</span><span>${rec.value}</span></div>
       <div class="pay-row"><span>Получатель</span><span>${rec.holder}</span></div>
     `;
-    if (rec.bank) {
-      rows += `<div class="pay-row"><span>Банк</span><span>${rec.bank}</span></div>`;
-    }
+    if (rec.bank) { rows += `<div class="pay-row"><span>Банк</span><span>${rec.bank}</span></div>`; }
     rows += `<div class="pay-row"><span>Сумма к оплате</span><span>${total.toLocaleString('ru-RU')} ₽</span></div>`;
-
     details.innerHTML = rows;
     details.classList.add('show');
     robokassaForm.style.display = 'none';
-    payButton.style.display = 'none'; // Скрываем кнопку онлайн-оплаты
+    payButton.style.display = 'none';
   }
 }
 
-/* ============================================================
-   ОПЛАТА ЧЕРЕЗ ROBOKASSA (iFrame)
-   ============================================================ */
 function processPayment() {
   if (cart.length === 0) return;
-
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   const outSum = total.toFixed(2);
   const invId = Math.floor(Date.now() / 1000);
-
-  // ВНИМАНИЕ: Генерация подписи на клиенте небезопасна.
-  // Для продакшена нужен серверный скрипт.
   const signatureString = `${ROBOKASSA_CONFIG.login}:${outSum}:${invId}:${ROBOKASSA_CONFIG.password1}`;
   const signatureValue = md5(signatureString);
-
   const formContainer = document.getElementById('robokassaForm');
   formContainer.innerHTML = '';
   formContainer.style.display = 'block';
-
   const iframe = document.createElement('iframe');
-  iframe.style.width = '100%';
-  iframe.style.height = '500px';
-  iframe.style.border = 'none';
-  iframe.setAttribute('frameborder', '0');
-  iframe.setAttribute('allowtransparency', 'true');
-
+  iframe.style.width = '100%'; iframe.style.height = '500px'; iframe.style.border = 'none';
+  iframe.setAttribute('frameborder', '0'); iframe.setAttribute('allowtransparency', 'true');
   const params = new URLSearchParams({
-    MerchantLogin: ROBOKASSA_CONFIG.login,
-    OutSum: outSum,
-    InvId: invId,
-    Description: 'Оплата заказа в NOMAD WEAR',
-    SignatureValue: signatureValue,
-    Culture: 'ru',
-    Encoding: 'utf-8',
-    IsTest: ROBOKASSA_CONFIG.isTestMode ? '1' : '0'
+    MerchantLogin: ROBOKASSA_CONFIG.login, OutSum: outSum, InvId: invId,
+    Description: 'Оплата заказа в NOMAD WEAR', SignatureValue: signatureValue,
+    Culture: 'ru', Encoding: 'utf-8', IsTest: ROBOKASSA_CONFIG.isTestMode ? '1' : '0'
   });
-
-  const baseUrl = 'https://auth.robokassa.ru/Merchant/Index.aspx';
-  iframe.src = `${baseUrl}?${params.toString()}`;
-  
+  iframe.src = `https://auth.robokassa.ru/Merchant/Index.aspx?${params.toString()}`;
   formContainer.appendChild(iframe);
-
   document.getElementById('payMethodsList').style.display = 'none';
   document.getElementById('payButton').style.display = 'none';
   document.getElementById('payDetails').classList.remove('show');
-
-  const cancelBtn = document.querySelector('.pay-cancel');
-  cancelBtn.textContent = 'Закрыть';
+  document.querySelector('.pay-cancel').textContent = 'Закрыть';
 }
 
-/* ============================================================
-   ЗАКРЫТИЕ ОКНА ОПЛАТЫ
-   ============================================================ */
 function closePay() {
   document.getElementById('payOverlay').classList.remove('open');
   document.getElementById('payMethodsList').style.display = 'block';
@@ -1122,13 +1162,8 @@ function closePay() {
   document.querySelector('.pay-cancel').textContent = 'Отмена';
 }
 
-function closePayOutside(e) {
-  if (e.target.id === 'payOverlay') closePay();
-}
+function closePayOutside(e) { if (e.target.id === 'payOverlay') closePay(); }
 
-/* ============================================================
-   TOAST
-   ============================================================ */
 let toastTimeout;
 function showToast(message) {
   const toast = document.getElementById('toast');
@@ -1138,11 +1173,11 @@ function showToast(message) {
   toastTimeout = setTimeout(() => toast.classList.remove('show'), 2000);
 }
 
-/* ============================================================
-   ИНИЦИАЛИЗАЦИЯ
-   ============================================================ */
+// ИНИЦИАЛИЗАЦИЯ И ЖЁСТКАЯ ЗАЩИТА
 renderProducts();
 updateCartUI();
+document.getElementById('cartOverlay').classList.remove('open');
+document.getElementById('payOverlay').classList.remove('open');
 </script>
 
 </body>
