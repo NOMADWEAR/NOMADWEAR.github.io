@@ -74,7 +74,7 @@
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(13, 13, 15, 0.75);
+    background: rgba(13, 13, 15, 0.85);
     backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border);
     box-shadow: 0 1px 0 rgba(200, 208, 216, 0.08), 0 4px 20px rgba(0,0,0,0.5);
@@ -107,7 +107,7 @@
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 2.5rem; /* Выровнял отступы */
+    gap: 2.5rem;
     list-style: none;
   }
   .nav-links li { display: flex; align-items: center; }
@@ -121,6 +121,28 @@
     cursor: pointer;
   }
   .nav-links a:hover { color: var(--accent-light); }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .mobile-custom-btn {
+    display: none; /* Скрыта на ПК */
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--accent-light);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .mobile-custom-btn:hover {
+    border-color: var(--accent);
+  }
 
   .cart-btn {
     background: var(--accent-grad);
@@ -201,7 +223,7 @@
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 10px 30px rgba(200, 208, 216, 0.28);
   }
 
-  /* ---------- КАТАЛОГ (TABS) ---------- */
+  /* ---------- КАТАЛОГ ---------- */
   .styles-section {
     max-width: 1280px;
     margin: 0 auto;
@@ -241,10 +263,7 @@
     white-space: nowrap;
     transition: all 0.2s;
   }
-  .tab:hover {
-    color: var(--text);
-    border-color: var(--muted);
-  }
+  .tab:hover { color: var(--text); border-color: var(--muted); }
   .tab.active {
     background: var(--accent-grad);
     color: #0d0d0f;
@@ -297,8 +316,7 @@
   }
   .product-tag {
     position: absolute;
-    top: 12px;
-    left: 12px;
+    top: 12px; left: 12px;
     background: var(--accent-2);
     color: #fff;
     font-size: 0.7rem;
@@ -329,11 +347,7 @@
     color: transparent;
   }
 
-  .product-name {
-    font-size: 1rem;
-    font-weight: 700;
-    margin-bottom: 0.8rem;
-  }
+  .product-name { font-size: 1rem; font-weight: 700; margin-bottom: 0.8rem; }
 
   .product-bottom {
     margin-top: auto;
@@ -342,10 +356,7 @@
     justify-content: space-between;
   }
 
-  .price {
-    font-size: 1.2rem;
-    font-weight: 900;
-  }
+  .price { font-size: 1.2rem; font-weight: 900; }
   .price small { color: var(--muted); font-size: 0.8rem; font-weight: 500; }
 
   .add-btn {
@@ -358,13 +369,11 @@
     font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.2s;
-    box-shadow: inset 0 0 0 rgba(255,255,255,0);
   }
   .add-btn:hover {
     background: var(--accent-grad);
     color: #0d0d0f;
     border-color: #e6edf2;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 2px 10px rgba(200,208,216,0.25);
   }
   .add-btn:active { transform: scale(0.95); }
 
@@ -384,10 +393,7 @@
     margin-bottom: 1.5rem;
     transition: all 0.2s;
   }
-  .back-btn:hover {
-    color: var(--accent-light);
-    border-color: var(--accent);
-  }
+  .back-btn:hover { color: var(--accent-light); border-color: var(--accent); }
 
   /* ---------- ABOUT ---------- */
   .about-wrap {
@@ -423,9 +429,7 @@
     transition: transform 0.35s ease;
     font-size: 0.8rem;
   }
-  .about-wrap.open .about-toggle .arrow {
-    transform: rotate(180deg);
-  }
+  .about-wrap.open .about-toggle .arrow { transform: rotate(180deg); }
 
   .about-reveal {
     display: grid;
@@ -439,10 +443,7 @@
     opacity: 1;
     margin-top: 1.2rem;
   }
-  .about-reveal > .about-inner {
-    overflow: hidden;
-    min-height: 0;
-  }
+  .about-reveal > .about-inner { overflow: hidden; min-height: 0; }
 
   .about-card {
     background: linear-gradient(160deg, rgba(31,31,38,0.94) 0%, rgba(25,25,32,0.94) 50%, rgba(29,29,36,0.94) 100%);
@@ -473,20 +474,10 @@
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    color: transparent;
     font-style: italic;
   }
-  .about-lead {
-    color: var(--accent-light);
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 1.4rem;
-  }
-  .about-text p {
-    color: var(--muted);
-    font-size: 0.96rem;
-    margin-bottom: 1rem;
-  }
+  .about-lead { color: var(--accent-light); font-size: 1rem; font-weight: 600; margin-bottom: 1.4rem; }
+  .about-text p { color: var(--muted); font-size: 0.96rem; margin-bottom: 1rem; }
   .about-text p strong { color: var(--text); font-weight: 700; }
   .about-text p em { color: var(--accent-light); font-style: italic; }
 
@@ -559,7 +550,7 @@
     display: inline-flex;
     align-items: center;
     gap: 0.8rem;
-    background: #2AABEE; /* Цвет Telegram */
+    background: #2AABEE;
     color: #fff;
     padding: 1rem 2.5rem;
     border-radius: 999px;
@@ -647,8 +638,7 @@
     flex-shrink: 0;
   }
   .qty-btn {
-    width: 26px;
-    height: 26px;
+    width: 28px; height: 28px;
     border-radius: 50%;
     border: 1px solid var(--border);
     background: transparent;
@@ -778,10 +768,7 @@
     border: 1px solid #e6edf2;
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 8px 24px rgba(0,0,0,0.5);
   }
-  .toast.show {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
   /* ---------- FOOTER ---------- */
   footer {
@@ -811,9 +798,20 @@
   .page { display: none; }
   .page.active { display: block; }
 
+  /* ---------- МОБИЛЬНАЯ АДАПТАЦИЯ ---------- */
   @media (max-width: 768px) {
     .nav-links { display: none; }
-    .nav { padding: 1rem; }
+    .nav { padding: 0.8rem 1rem; gap: 0.5rem; }
+    
+    .mobile-custom-btn { display: block; }
+    
+    .cart-btn {
+      padding: 0.5rem 0.9rem;
+      font-size: 0.85rem;
+    }
+    
+    .logo { font-size: 1.2rem; }
+    
     .hero { padding: 3rem 1.2rem 2rem; }
     .styles-section { padding: 1rem 1.2rem; }
     .about-wrap { padding: 0 1.2rem; }
@@ -822,11 +820,16 @@
     .product-name { font-size: 0.9rem; }
     .price { font-size: 1rem; }
     .add-btn { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
+    
     .about-card { padding: 1.5rem 1.2rem 1.8rem; }
     .custom-order-section { padding: 1rem 1.2rem; }
     .custom-order-card { padding: 2rem 1.2rem; }
+    
     .pay-actions { flex-direction: column; }
     .pay-cancel { width: 100%; }
+    
+    .cart-item { gap: 0.8rem; }
+    .qty-btn { width: 26px; height: 26px; font-size: 0.9rem; }
   }
 </style>
 </head>
@@ -838,14 +841,23 @@
 <header>
   <nav class="nav">
     <div class="logo" onclick="showHome()">NOMAD<span>WEAR</span></div>
+    
+    <!-- Меню для ПК -->
     <ul class="nav-links">
       <li><a onclick="showCatalog()">Каталог</a></li>
-      <li><a onclick="showCustomOrder()">Вещи на заказ</a></li>
+      <li><a onclick="showCustomOrder()">Кастом под заказ</a></li>
       <li><a onclick="toggleAbout(true)">О нас</a></li>
     </ul>
-    <button class="cart-btn" onclick="openCart()">
-      Корзина <span class="cart-count" id="cartCount">0</span>
-    </button>
+
+    <!-- Действия (корзина и мобильная кнопка кастома) -->
+    <div class="nav-actions">
+      <!-- Эта кнопка видна только на телефонах -->
+      <button class="mobile-custom-btn" onclick="showCustomOrder()">Кастом</button>
+      
+      <button class="cart-btn" onclick="openCart()">
+        Корзина <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
   </nav>
 </header>
 
@@ -875,13 +887,13 @@
   </section>
 </div>
 
-<!-- ============ ВЕЩИ НА ЗАКАЗ ============ -->
+<!-- ============ КАСТОМ ПОД ЗАКАЗ ============ -->
 <div id="page-custom" class="page">
   <section class="custom-order-section">
     <button class="back-btn" onclick="showHome()">← Назад на главную</button>
     
     <div class="custom-order-card">
-      <h2>Вещи на заказ <span class="accent">по эскизу</span></h2>
+      <h2>Кастом <span class="accent">под заказ</span></h2>
       <p>
         Хочешь уникальную вещь, которой нет в каталоге? Или у тебя есть свой собственный эскиз/принт, который ты хочешь воплотить в жизнь? 
         Мы делаем кастом под ключ: от подбора фасона и ткани до нанесения твоего рисунка.
