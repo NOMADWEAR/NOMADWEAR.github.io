@@ -38,7 +38,7 @@
     position: relative;
   }
 
-  /* ---------- ФОН С КАРТИНКОЙ (ЗАБЛЮРЕН) ---------- */
+  /* ---------- ФОН С КАРТИНКОЙ (БОЛЕЕ ВЫРАЖЕННЫЙ) ---------- */
   body::before {
     content: '';
     position: fixed;
@@ -47,8 +47,8 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    filter: blur(6px) brightness(0.35);
-    transform: scale(1.06);
+    filter: blur(3px) brightness(0.5) contrast(1.08) saturate(1.15);
+    transform: scale(1.05);
     z-index: -2;
     pointer-events: none;
   }
@@ -58,10 +58,10 @@
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(ellipse at 20% 0%, rgba(200, 208, 216, 0.06) 0%, transparent 50%),
-      radial-gradient(ellipse at 80% 100%, rgba(200, 208, 216, 0.05) 0%, transparent 50%),
+      radial-gradient(ellipse at 20% 0%, rgba(200, 208, 216, 0.08) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 100%, rgba(200, 208, 216, 0.06) 0%, transparent 55%),
       repeating-linear-gradient(45deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 6px),
-      rgba(13, 13, 15, 0.55);
+      rgba(13, 13, 15, 0.45);
     z-index: -1;
     pointer-events: none;
   }
@@ -390,221 +390,128 @@
     border-color: var(--accent);
   }
 
-  /* ---------- CART MODAL ---------- */
-  .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(4px);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 200;
-    padding: 1rem;
+  /* ---------- ABOUT (РАСКРЫВАЮЩИЙСЯ БЛОК ВНИЗУ) ---------- */
+  .about-wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
   }
-  .modal-overlay.open { display: flex; }
 
-  .cart-modal {
-    background: linear-gradient(160deg, #1a1a20 0%, #14141a 100%);
-    border: 1px solid var(--border);
-    border-radius: 20px;
+  .about-toggle {
     width: 100%;
-    max-width: 480px;
-    max-height: 85vh;
-    overflow-y: auto;
-    padding: 1.5rem;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 20px 60px rgba(0,0,0,0.7);
-  }
-
-  .cart-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.2rem;
-  }
-  .cart-header h2 { font-size: 1.3rem; }
-
-  .close-btn {
-    background: transparent;
-    border: none;
-    color: var(--muted);
-    font-size: 1.5rem;
-    cursor: pointer;
-    line-height: 1;
-  }
-  .close-btn:hover { color: var(--text); }
-
-  .cart-item {
-    display: flex;
-    gap: 1rem;
-    padding: 0.8rem 0;
-    border-bottom: 1px solid var(--border);
-    align-items: center;
-  }
-  .cart-item-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #26262e, #32323c);
-    flex-shrink: 0;
-    border: 1px solid var(--border);
-  }
-  .cart-item-info { flex: 1; }
-  .cart-item-name { font-size: 0.9rem; font-weight: 600; }
-  .cart-item-price { color: var(--muted); font-size: 0.8rem; }
-
-  /* ---------- QTY CONTROLS ---------- */
-  .qty-controls {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    flex-shrink: 0;
-  }
-  .qty-btn {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--text);
-    font-size: 1rem;
-    line-height: 1;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
-  }
-  .qty-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent-light);
-  }
-  .qty-btn:active { transform: scale(0.9); }
-  .qty-value {
-    min-width: 22px;
-    text-align: center;
-    font-weight: 700;
-    font-size: 0.9rem;
-  }
-
-  .cart-empty {
-    text-align: center;
+    gap: 0.6rem;
+    background: transparent;
+    border: 1px solid var(--border);
     color: var(--muted);
-    padding: 2rem 0;
-  }
-
-  .cart-total {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1.2rem;
-    padding-top: 1.2rem;
-    border-top: 2px solid var(--border);
-    font-size: 1.1rem;
-    font-weight: 800;
-  }
-
-  .checkout-btn {
-    width: 100%;
-    margin-top: 1rem;
-    background: var(--accent-grad);
-    color: #0d0d0f;
-    border: 1px solid #e6edf2;
-    padding: 1rem;
+    padding: 1rem 2rem;
     border-radius: 999px;
-    font-weight: 800;
-    font-size: 1rem;
+    font-weight: 700;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 4px 14px rgba(0,0,0,0.4);
+    transition: all 0.25s;
+    margin-top: 2rem;
   }
-  .checkout-btn:hover {
-    transform: scale(1.02);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 24px rgba(200,208,216,0.25);
+  .about-toggle:hover {
+    color: var(--accent-light);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(200,208,216,0.12);
   }
-  .checkout-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+  .about-toggle .arrow {
+    display: inline-block;
+    transition: transform 0.35s ease;
+    font-size: 0.8rem;
+  }
+  .about-wrap.open .about-toggle .arrow {
+    transform: rotate(180deg);
   }
 
-  /* ---------- CHECKOUT MODAL ---------- */
-  .pay-modal {
-    background: linear-gradient(160deg, #1a1a20 0%, #14141a 100%);
+  /* Контейнер раскрытия — плавно растягивает страницу вниз */
+  .about-reveal {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s ease, opacity 0.4s ease, margin 0.4s ease;
+    opacity: 0;
+    margin-top: 0;
+  }
+  .about-wrap.open .about-reveal {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    margin-top: 1.2rem;
+  }
+  .about-reveal > .about-inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .about-card {
+    background: linear-gradient(160deg, rgba(31,31,38,0.94) 0%, rgba(25,25,32,0.94) 50%, rgba(29,29,36,0.94) 100%);
+    backdrop-filter: blur(10px);
     border: 1px solid var(--border);
     border-radius: 20px;
-    width: 100%;
-    max-width: 460px;
-    max-height: 85vh;
-    overflow-y: auto;
-    padding: 1.5rem;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 20px 60px rgba(0,0,0,0.7);
+    padding: 2.2rem 2.5rem 2.4rem;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 12px 40px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
   }
-  .pay-modal h2 { font-size: 1.3rem; margin-bottom: 0.4rem; }
-  .pay-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.2rem; }
+  .about-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(230,237,242,0.6), transparent);
+  }
 
-  .pay-method {
+  .about-card h2 {
+    font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
+  }
+  .about-card h2 .accent {
+    background: var(--accent-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    font-style: italic;
+  }
+  .about-lead {
+    color: var(--accent-light);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1.4rem;
+  }
+  .about-text p {
+    color: var(--muted);
+    font-size: 0.96rem;
+    margin-bottom: 1rem;
+  }
+  .about-text p strong { color: var(--text); font-weight: 700; }
+  .about-text p em { color: var(--accent-light); font-style: italic; }
+
+  .about-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 1.4rem 0;
+  }
+
+  .about-signature {
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    padding: 0.9rem 1rem;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    margin-bottom: 0.6rem;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-    background: rgba(255,255,255,0.02);
-  }
-  .pay-method:hover { border-color: var(--accent); }
-  .pay-method.selected {
-    border-color: var(--accent);
-    background: rgba(200,208,216,0.06);
-  }
-  .pay-method input { accent-color: #c8d0d8; }
-  .pay-method-label { font-weight: 600; font-size: 0.9rem; }
-  .pay-method-desc { color: var(--muted); font-size: 0.75rem; }
-
-  .pay-details {
-    margin-top: 0.8rem;
-    padding: 0.9rem 1rem;
-    border-radius: 12px;
-    background: rgba(0,0,0,0.3);
-    border: 1px dashed var(--border);
-    font-size: 0.85rem;
-    line-height: 1.7;
-    display: none;
-  }
-  .pay-details.show { display: block; }
-  .pay-details .pay-row { display: flex; justify-content: space-between; gap: 1rem; }
-  .pay-details .pay-row span:first-child { color: var(--muted); }
-  .pay-details .pay-row span:last-child { font-weight: 700; word-break: break-all; }
-
-  /* Форма Robokassa внутри окна */
-  #robokassaForm {
-    display: none;
-    margin-top: 1rem;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    background: #fff;
-  }
-
-  .pay-actions { display: flex; gap: 0.6rem; margin-top: 1.2rem; }
-  .pay-actions .checkout-btn { margin-top: 0; }
-  .pay-cancel {
-    flex: 0 0 auto;
-    background: transparent;
-    border: 1px solid var(--border);
+    margin-top: 1.4rem;
     color: var(--muted);
-    padding: 1rem 1.4rem;
-    border-radius: 999px;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.2s;
+    font-size: 0.85rem;
   }
-  .pay-cancel:hover { color: var(--text); border-color: var(--muted); }
+  .about-signature .sig-line {
+    width: 40px;
+    height: 2px;
+    background: var(--accent-grad);
+    border-radius: 2px;
+  }
 
   /* ---------- TOAST ---------- */
   .toast {
@@ -653,6 +560,13 @@
   .footer-contacts a { color: var(--accent-light); font-weight: 600; }
   .footer-contacts a:hover { text-decoration: underline; }
 
+  .footer-about-link {
+    color: var(--accent-light);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .footer-about-link:hover { text-decoration: underline; }
+
   /* ---------- СКРЫТИЕ / ПОКАЗ СТРАНИЦ ---------- */
   .page { display: none; }
   .page.active { display: block; }
@@ -663,13 +577,13 @@
     .nav { padding: 1rem; }
     .hero { padding: 3rem 1.2rem 2rem; }
     .styles-section { padding: 1rem 1.2rem; }
+    .about-wrap { padding: 0 1.2rem; }
     .products { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
     .product-info { padding: 0.8rem 0.9rem 1rem; }
     .product-name { font-size: 0.9rem; }
     .price { font-size: 1rem; }
     .add-btn { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
-    .pay-actions { flex-direction: column; }
-    .pay-cancel { width: 100%; }
+    .about-card { padding: 1.5rem 1.2rem 1.8rem; }
   }
 </style>
 </head>
@@ -685,7 +599,7 @@
     <ul class="nav-links">
       <li><a onclick="showCatalog()">Каталог</a></li>
       <li><a onclick="showCatalog()">Стили</a></li>
-      <li><a href="#about">О нас</a></li>
+      <li><a onclick="toggleAbout(true)">О нас</a></li>
     </ul>
     <button class="cart-btn" onclick="openCart()">
       Корзина <span class="cart-count" id="cartCount">0</span>
@@ -721,6 +635,63 @@
     <div class="products" id="products"></div>
   </section>
 </div>
+
+<!-- ============ РАСКРЫВАЮЩИЙСЯ БЛОК "О НАС" (РАСТЯГИВАЕТ САЙТ ВНИЗ) ============ -->
+<section class="about-wrap" id="aboutWrap">
+  <button class="about-toggle" onclick="toggleAbout()">
+    <span class="toggle-label">О нас — предыстория</span>
+    <span class="arrow">▼</span>
+  </button>
+
+  <div class="about-reveal">
+    <div class="about-inner">
+      <div class="about-card">
+        <h2>Предыстория <span class="accent">NOMAD WEAR</span></h2>
+        <p class="about-lead">Как всё начиналось — без маркетинга, честно.</p>
+
+        <div class="about-text">
+          <p>
+            <strong>NOMAD WEAR</strong> родился не в бизнес-инкубаторе и не на курсах по предпринимательству.
+            Он родился в гараже, где пахло краской, старым скейтом и растворителем. Мы красили первые футболки
+            вручную — криво, смело и без права на ошибку. Первые двадцать штук ушли друзьям, которые носили их
+            в скейт-парках и на квартирниках.
+          </p>
+
+          <p>
+            Идея была простой: <em>одежда должна говорить за тебя, пока ты молчишь.</em> Никаких
+            «трендов сезона» и безликих принтов из масс-маркета. Только вещи, которые отражают
+            конкретную субкультуру — <strong>sk8</strong>, <strong>streetwear</strong>,
+            <strong>Y2K</strong>, <strong>vintage</strong>.
+          </p>
+
+          <p>
+            Мы не гонимся за тиражами в тысячи штук. Каждый дроп — ограничен, каждая вещь
+            прокрашена с вниманием к деталям. Если ты купил худи NOMAD WEAR — будь уверен:
+            такой же точно не будет ни у кого из твоего окружения. Мы делаем ставку на
+            <strong>уникальность</strong>, а не на скорость.
+          </p>
+
+          <p>
+            Сегодня NOMAD WEAR — это команда из нескольких человек, которые всё ещё сами
+            красят, пакуют и подписывают каждую посылку. Мы выросли из гаража, но
+            <em>остались теми же</em>: делаем вещи с характером для тех, кто не как все.
+          </p>
+        </div>
+
+        <div class="about-divider"></div>
+
+        <p class="about-text" style="margin-bottom:0">
+          <em>Спасибо, что носишь NOMAD WEAR. Это больше, чем одежда.</em>
+        </p>
+
+        <div class="about-signature">
+          <span class="sig-line"></span>
+          <span>Команда NOMAD WEAR · с 2024 года</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ============ CART MODAL ============ -->
 <div class="modal-overlay" id="cartOverlay" onclick="closeCartOutside(event)">
@@ -782,8 +753,8 @@
 <div class="toast" id="toast">Товар добавлен в корзину</div>
 
 <!-- ============ FOOTER ============ -->
-<footer id="about">
-  <div class="logo">NOMAD<span>WEAR</span></div>
+<footer id="footer">
+  <div class="logo" onclick="showHome()" style="cursor:pointer">NOMAD<span>WEAR</span></div>
   <p>© 2026 NOMAD WEAR — Кастомная одежда с характером</p>
   <p style="margin-top:0.5rem">Сделано с душой для тех, кто не как все</p>
 
@@ -791,6 +762,8 @@
     <a href="https://t.me/nomadwearshop" target="_blank" rel="noopener">tg:@nomadwearshop</a>
     <span>·</span>
     <a href="mailto:info@nomadwear.ru">info@nomadwear.ru</a>
+    <span>·</span>
+    <span class="footer-about-link" onclick="toggleAbout(true)">О нас</span>
   </div>
 </footer>
 
@@ -870,6 +843,25 @@ function showCatalog() {
   document.getElementById('page-catalog').classList.add('active');
   renderProducts();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============================================================
+   РАСКРЫВАЮЩИЙСЯ БЛОК "О НАС"
+   ============================================================ */
+function toggleAbout(forceOpen) {
+  const wrap = document.getElementById('aboutWrap');
+  const willOpen = (typeof forceOpen === 'boolean') ? forceOpen : !wrap.classList.contains('open');
+
+  wrap.classList.toggle('open', willOpen);
+  const label = wrap.querySelector('.toggle-label');
+  if (label) label.textContent = willOpen ? 'Свернуть предысторию' : 'О нас — предыстория';
+
+  if (willOpen) {
+    // Плавно прокручиваем к раскрытому блоку, чтобы пользователь увидел предысторию
+    setTimeout(() => {
+      wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 120);
+  }
 }
 
 /* ============================================================
