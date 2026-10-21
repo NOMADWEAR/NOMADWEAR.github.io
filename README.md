@@ -107,7 +107,7 @@
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 2.5rem; /* Выровнял отступы */
     list-style: none;
   }
   .nav-links li { display: flex; align-items: center; }
@@ -115,7 +115,7 @@
     display: inline-flex;
     align-items: center;
     line-height: 1;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--muted);
     transition: color 0.2s;
     cursor: pointer;
@@ -201,7 +201,7 @@
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 10px 30px rgba(200, 208, 216, 0.28);
   }
 
-  /* ---------- TABS (СТИЛИ) ---------- */
+  /* ---------- КАТАЛОГ (TABS) ---------- */
   .styles-section {
     max-width: 1280px;
     margin: 0 auto;
@@ -252,7 +252,6 @@
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 2px 10px rgba(200,208,216,0.2);
   }
 
-  /* ---------- КАТАЛОГ ---------- */
   .products {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -512,16 +511,80 @@
     border-radius: 2px;
   }
 
-  /* ---------- МОДАЛКИ (ЖЁСТКАЯ ФИКСАЦИЯ) ---------- */
+  /* ---------- CUSTOM ORDER PAGE ---------- */
+  .custom-order-section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .custom-order-card {
+    background: linear-gradient(160deg, rgba(31,31,38,0.94) 0%, rgba(25,25,32,0.94) 50%, rgba(29,29,36,0.94) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 3rem 2.5rem;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 12px 40px rgba(0,0,0,0.5);
+    position: relative;
+  }
+  .custom-order-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(230,237,242,0.6), transparent);
+  }
+  
+  .custom-order-card h2 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 900;
+    margin-bottom: 1rem;
+  }
+  .custom-order-card h2 .accent {
+    background: var(--accent-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-style: italic;
+  }
+  .custom-order-card p {
+    color: var(--muted);
+    font-size: 1.05rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+  
+  .tg-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: #2AABEE; /* Цвет Telegram */
+    color: #fff;
+    padding: 1rem 2.5rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 14px rgba(42, 171, 238, 0.4);
+    border: none;
+    cursor: pointer;
+  }
+  .tg-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(42, 171, 238, 0.6);
+  }
+
+  /* ---------- МОДАЛКИ ---------- */
   .modal-overlay {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0, 0, 0, 0.75);
     backdrop-filter: blur(5px);
-    display: none; /* Скрыто по умолчанию */
+    display: none;
     align-items: center;
     justify-content: center;
-    z-index: 9999; /* Поверх всего */
+    z-index: 9999;
     padding: 1rem;
   }
   .modal-overlay.open { display: flex; }
@@ -598,23 +661,11 @@
     justify-content: center;
     transition: all 0.2s;
   }
-  .qty-btn:hover {
-    border-color: var(--accent);
-    color: var(--accent-light);
-  }
+  .qty-btn:hover { border-color: var(--accent); color: var(--accent-light); }
   .qty-btn:active { transform: scale(0.9); }
-  .qty-value {
-    min-width: 22px;
-    text-align: center;
-    font-weight: 700;
-    font-size: 0.9rem;
-  }
+  .qty-value { min-width: 22px; text-align: center; font-weight: 700; font-size: 0.9rem; }
 
-  .cart-empty {
-    text-align: center;
-    color: var(--muted);
-    padding: 2rem 0;
-  }
+  .cart-empty { text-align: center; color: var(--muted); padding: 2rem 0; }
 
   .cart-total {
     display: flex;
@@ -646,10 +697,7 @@
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 24px rgba(200,208,216,0.25);
   }
   .checkout-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
+    opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none;
   }
 
   .pay-modal h2 { font-size: 1.3rem; margin-bottom: 0.4rem; }
@@ -668,10 +716,7 @@
     background: rgba(255,255,255,0.02);
   }
   .pay-method:hover { border-color: var(--accent); }
-  .pay-method.selected {
-    border-color: var(--accent);
-    background: rgba(200,208,216,0.06);
-  }
+  .pay-method.selected { border-color: var(--accent); background: rgba(200,208,216,0.06); }
   .pay-method input { accent-color: #c8d0d8; }
   .pay-method-label { font-weight: 600; font-size: 0.9rem; }
   .pay-method-desc { color: var(--muted); font-size: 0.75rem; }
@@ -763,13 +808,6 @@
   .footer-contacts a { color: var(--accent-light); font-weight: 600; }
   .footer-contacts a:hover { text-decoration: underline; }
 
-  .footer-about-link {
-    color: var(--accent-light);
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .footer-about-link:hover { text-decoration: underline; }
-
   .page { display: none; }
   .page.active { display: block; }
 
@@ -785,6 +823,8 @@
     .price { font-size: 1rem; }
     .add-btn { padding: 0.4rem 0.8rem; font-size: 0.75rem; }
     .about-card { padding: 1.5rem 1.2rem 1.8rem; }
+    .custom-order-section { padding: 1rem 1.2rem; }
+    .custom-order-card { padding: 2rem 1.2rem; }
     .pay-actions { flex-direction: column; }
     .pay-cancel { width: 100%; }
   }
@@ -800,7 +840,7 @@
     <div class="logo" onclick="showHome()">NOMAD<span>WEAR</span></div>
     <ul class="nav-links">
       <li><a onclick="showCatalog()">Каталог</a></li>
-      <li><a onclick="showCatalog()">Стили</a></li>
+      <li><a onclick="showCustomOrder()">Вещи на заказ</a></li>
       <li><a onclick="toggleAbout(true)">О нас</a></li>
     </ul>
     <button class="cart-btn" onclick="openCart()">
@@ -832,6 +872,32 @@
       <button class="tab" data-style="vintage">Vintage</button>
     </div>
     <div class="products" id="products"></div>
+  </section>
+</div>
+
+<!-- ============ ВЕЩИ НА ЗАКАЗ ============ -->
+<div id="page-custom" class="page">
+  <section class="custom-order-section">
+    <button class="back-btn" onclick="showHome()">← Назад на главную</button>
+    
+    <div class="custom-order-card">
+      <h2>Вещи на заказ <span class="accent">по эскизу</span></h2>
+      <p>
+        Хочешь уникальную вещь, которой нет в каталоге? Или у тебя есть свой собственный эскиз/принт, который ты хочешь воплотить в жизнь? 
+        Мы делаем кастом под ключ: от подбора фасона и ткани до нанесения твоего рисунка.
+      </p>
+      <p>
+        Чтобы обсудить детали, сроки и стоимость, напиши нам в Telegram-бота. Прикрепи эскиз, укажи желаемый размер и мы свяжемся с тобой!
+      </p>
+      
+      <!-- ВСТАВЬТЕ ССЫЛКУ НА ТГ-БОТА В HREF НИЖЕ -->
+      <a href="https://t.me/ВАШ_БОТ_ТУТ" target="_blank" rel="noopener" class="tg-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21.6843 2.20419C21.4414 1.96048 21.0557 1.89161 20.7457 2.02722L1.90612 10.3001C1.60079 10.4335 1.43535 10.7682 1.52047 11.0884C1.60559 11.4086 1.9133 11.6233 2.24478 11.6091L7.65358 11.3828L9.88079 20.7037C9.95276 21.0073 10.2052 21.2296 10.514 21.2616C10.8229 21.2936 11.1151 21.1293 11.2482 20.8496L13.8386 15.3522L19.5627 20.1115C19.8023 20.3098 20.1459 20.3205 20.3961 20.1368C20.6462 19.9531 20.7521 19.6313 20.6563 19.3389L21.9868 2.89724C22.0479 2.57565 21.9271 2.44791 21.6843 2.20419ZM9.43157 13.4926L8.18618 18.8399L6.73259 12.7453L17.9907 5.21663L9.43157 13.4926ZM14.5019 14.5276L11.1375 18.3886L12.2246 13.8208L19.3255 6.78326L14.5019 14.5276Z" fill="currentColor"/>
+        </svg>
+        Написать в Telegram
+      </a>
+    </div>
   </section>
 </div>
 
@@ -932,8 +998,6 @@
     <a href="https://t.me/nomadwearshop" target="_blank" rel="noopener">tg:@nomadwearshop</a>
     <span>·</span>
     <a href="mailto:info@nomadwear.ru">info@nomadwear.ru</a>
-    <span>·</span>
-    <span class="footer-about-link" onclick="toggleAbout(true)">О нас</span>
   </div>
 </footer>
 
@@ -974,13 +1038,22 @@ let currentPayMethod = 'card';
 function showHome() {
   document.getElementById('page-home').classList.add('active');
   document.getElementById('page-catalog').classList.remove('active');
+  document.getElementById('page-custom').classList.remove('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function showCatalog() {
   document.getElementById('page-home').classList.remove('active');
+  document.getElementById('page-custom').classList.remove('active');
   document.getElementById('page-catalog').classList.add('active');
   renderProducts();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showCustomOrder() {
+  document.getElementById('page-home').classList.remove('active');
+  document.getElementById('page-catalog').classList.remove('active');
+  document.getElementById('page-custom').classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1177,7 +1250,6 @@ function showToast(message) {
   toastTimeout = setTimeout(() => toast.classList.remove('show'), 2000);
 }
 
-// ИНИЦИАЛИЗАЦИЯ И ЖЁСТКАЯ ЗАЩИТА
 renderProducts();
 updateCartUI();
 document.getElementById('cartOverlay').classList.remove('open');
